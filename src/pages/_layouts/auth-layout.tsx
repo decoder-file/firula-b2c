@@ -1,0 +1,22 @@
+import React from 'react'
+import { Outlet } from 'react-router-dom'
+
+export default function AuthLayout() {
+  const verifyToken = async () => {
+    const token = localStorage.getItem('token')
+    if (token) {
+      window.location.href = '/'
+    }
+  }
+
+  React.useEffect(() => {
+    verifyToken()
+  }, [])
+  return (
+    <div className="flex min-h-screen flex-col items-center justify-center px-4">
+      <div className="w-full max-w-xs">
+        <Outlet />
+      </div>
+    </div>
+  )
+}
