@@ -1,6 +1,5 @@
 import api from '../api'
 import { toast } from 'sonner'
-import { CompanyType } from '../companies'
 
 export type UserType = {
   id: string
@@ -11,7 +10,7 @@ export type UserType = {
   isBlock: boolean
   imageUrl: string | null
   UserAddress: []
-  Company: CompanyType
+  Company: []
   UserProfile: []
 }
 

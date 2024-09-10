@@ -20,7 +20,7 @@ mixpanel.init(env.REACT_APP_MIXPANEL, {
 
 export function App() {
   return (
-    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+    <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
       <HelmetProvider>
         <Helmet titleTemplate="%s | Firula" />
         <TooltipProvider>
