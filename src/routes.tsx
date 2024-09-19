@@ -6,6 +6,7 @@ import { PageNotFound } from './pages/pageNotFound'
 import AuthLayout from './pages/_layouts/auth-layout'
 import { ListCompany } from './pages/main/list-company'
 import { CompanyLayout } from './pages/_layouts/company'
+import { CompanyPage } from './pages/main/company-page'
 
 export const router = createBrowserRouter([
   {
@@ -27,6 +28,15 @@ export const router = createBrowserRouter([
       {
         path: '/quadras',
         element: <ListCompany />,
+      },
+    ],
+  },
+  {
+    element: <CompanyLayout />,
+    children: [
+      {
+        path: '/quadras/:slug',
+        element: <CompanyPage />,
       },
     ],
   },

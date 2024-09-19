@@ -145,7 +145,7 @@ export function ListCompany() {
                     </p>
                     <Separator className="my-2 opacity-30" />
                     <Button
-                      onClick={() => navigate(`/company-info/${company.id}`)}
+                      onClick={() => navigate(`/quadras/${company.slug}`)}
                     >
                       Selecionar quadra
                     </Button>
