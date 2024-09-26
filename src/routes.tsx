@@ -7,6 +7,7 @@ import AuthLayout from './pages/_layouts/auth-layout'
 import { ListCompany } from './pages/main/list-company'
 import { CompanyLayout } from './pages/_layouts/company'
 import { CompanyPage } from './pages/main/company-page'
+import { CompanySelectDate } from './pages/main/company-select-date'
 
 export const router = createBrowserRouter([
   {
@@ -37,6 +38,15 @@ export const router = createBrowserRouter([
       {
         path: '/quadras/:slug',
         element: <CompanyPage />,
+      },
+    ],
+  },
+  {
+    element: <CompanyLayout />,
+    children: [
+      {
+        path: '/quadras/:slug/:blockId',
+        element: <CompanySelectDate />,
       },
     ],
   },

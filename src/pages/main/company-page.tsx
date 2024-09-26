@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 import { formatStringCapitalized } from '../../utils/functions'
 
@@ -10,6 +10,7 @@ import { getCompanyBySlug, CompanyType } from '../../services/companies'
 import { BlockCard } from '../../components/block-card'
 
 export function CompanyPage() {
+  const navigate = useNavigate()
   const { slug } = useParams()
 
   const [loading, setLoading] = useState(true)
@@ -43,8 +44,8 @@ export function CompanyPage() {
     <>
       <Helmet title="Info" />
 
-      <div className="flex w-full flex-col items-center px-4">
-        <div className="flex h-screen w-full max-w-2xl flex-col items-center">
+      <div className="flex  w-full flex-col items-center">
+        <div className="flex w-full max-w-2xl flex-col items-center">
           {!loading ? (
             <>
               <h1 className="mb-2 mt-6 text-center text-3xl font-light ">
@@ -72,7 +73,11 @@ export function CompanyPage() {
                 blocks.map((block) => {
                   return (
                     <>
-                      <BlockCard block={block} company={company} />
+                      <BlockCard
+                        block={block}
+                        company={company}
+                        onClick={() => navigate(`/quadras/${slug}/${block.id}`)}
+                      />
                     </>
                   )
                 })

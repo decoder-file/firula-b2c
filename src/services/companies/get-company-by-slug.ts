@@ -26,8 +26,6 @@ export const getCompanyBySlug = async ({
 
     const response: CompanyBySlugResponseType = await api.get(url)
 
-    console.log('response', response)
-
     return {
       company: response.data.company,
       success: true,
