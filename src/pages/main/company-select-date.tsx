@@ -8,13 +8,6 @@ import { Button } from '../../components/ui/button'
 import { Calendar } from '../../components/ui/calendar'
 
 import {
-  TimeType,
-  fetchAvailableTime,
-} from '../../services/schedule/getAvailableTime'
-
-// import { useSchedulingStore } from '../../store/SchedulingStore'
-// import { useUserStore } from '../../store/UserStore'
-import {
   AlertDialog,
   AlertDialogAction,
   AlertDialogCancel,
@@ -24,17 +17,17 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '../../components/ui/alert-dialog'
-import { formatStringCapitalized, formatCurrency } from '../../utils/functions'
+import { formatStringCapitalized } from '../../utils/functions'
 import {
   AvailableTimeType,
   getAvailableTime,
 } from '../../services/companies/block/available-time'
+import { useSchedulingStore } from '../../store/SchedulingStore'
 
 export function CompanySelectDate() {
-  // const { setScheduling, scheduling } = useSchedulingStore()
-  // const { user } = useUserStore()
+  const { setScheduling, scheduling } = useSchedulingStore()
   const navigate = useNavigate()
-  const { blockId } = useParams()
+  const { blockId, slug } = useParams()
 
   const [openDialog, setOpenDialog] = useState(false)
   const [date, setDate] = useState<Date | undefined>(new Date())
@@ -55,6 +48,8 @@ export function CompanySelectDate() {
     if (response) {
       if (response.typeError === 'closedCompany') {
         setAvailableCourt(false)
+        setLoading(false)
+
         return
       }
       setValueForHour(response.valueForHour ?? '')
@@ -65,17 +60,13 @@ export function CompanySelectDate() {
   }
 
   const handleSelectHour = (time: string) => {
-    // setScheduling({
-    //   ...scheduling,
-    //   hour: time,
-    //   date,
-    // })
-    // if (!user.id) {
-    //   setOpenDialog(true)
-    //   return
-    // }
+    setScheduling({
+      ...scheduling,
+      hour: time,
+      date: moment(date).format('YYYY-MM-DD'),
+    })
 
-    navigate('/scheduling/confirm')
+    navigate(`/quadras/${slug}/${blockId}/confirmar-agendamento`)
   }
 
   useEffect(() => {
