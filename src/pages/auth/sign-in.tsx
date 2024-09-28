@@ -12,9 +12,10 @@ import { Input } from '../../components/ui/input'
 import { Label } from '../../components/ui/label'
 
 import LogoGreen from '../../assets/logo-green.png'
-import { AuthenticateResponseType } from '../../services/user/authenticate'
 import { useUserStore } from '../../store/UserStore'
+import { AuthenticateResponseType } from '../../services/user/authenticate'
 import api from '../../services/api'
+import { useRouterStore } from '../../store/UserRouter'
 
 const signInForm = z.object({
   email: z.string().email('Email inválido'),
@@ -25,6 +26,8 @@ type SingInForm = z.infer<typeof signInForm>
 
 export function SignIn() {
   const { setUser } = useUserStore()
+  const { routerName } = useRouterStore()
+
   const navigate = useNavigate()
   const [loadingSignIn, setLoadingSignIn] = useState(false)
   const {
@@ -42,8 +45,10 @@ export function SignIn() {
 
       const { token, user } = response.data
 
-      if (user.role !== 'ADMIN') {
-        toast.error('Você não tem permissão para acessar o painel de controle')
+      if (user.role !== 'CUSTOMER') {
+        toast.error(
+          'Você não tem permissão para acessar esse painel de controle',
+        )
         setLoadingSignIn(false)
         return
       }
@@ -51,14 +56,18 @@ export function SignIn() {
       localStorage.setItem('token', token)
 
       setUser({
-        id: user.id,
+        userId: user.id,
         name: user.name,
         email: user.email,
         role: user.role,
       })
       toast.success('Login realizado com sucesso!')
 
-      navigate('/home')
+      if (routerName) {
+        navigate(routerName)
+        return
+      }
+      navigate('/quadras')
 
       setLoadingSignIn(false)
     } catch (error) {
@@ -69,44 +78,86 @@ export function SignIn() {
   return (
     <>
       <Helmet title="Login" />
-      <form onSubmit={handleSubmit(handleSignIn)} className="space-y-4">
-        <div className="flex justify-center">
-          <img src={LogoGreen} alt="Logo Firula" className="w-20" />
-        </div>
-        <div className="flex flex-col items-center gap-2 text-center">
-          <h1 className="text-2xl font-semibold tracking-tight">
-            Acessar painel de controle
-          </h1>
-          <p className="text-sm text-muted-foreground">
-            Gerencie o Firula de forma simples e eficiente
-          </p>
-        </div>
-        <div className="space-y-1">
-          <Label htmlFor="email">E-mail</Label>
-          <Input id="email" type="email" {...register('email')} />
-          {errors.email && (
-            <span className="text-xs text-red-600">{errors.email.message}</span>
-          )}
-        </div>
+      <div className="flex w-full items-center justify-center">
+        <div className="flex max-w-max flex-col justify-center gap-6">
+          <div className="flex flex-col items-center gap-2 text-center">
+            <img src={LogoGreen} alt="Logo Firula" className="w-20 md:hidden" />
+            <h1 className="text-2xl font-semibold tracking-tight">
+              Faça Login
+            </h1>
+            <p className="text-sm text-muted-foreground">
+              Faça login para marcar um horário com a Firula
+            </p>
+          </div>
 
-        <div className="space-y-1">
-          <Label htmlFor="password">Senha</Label>
-          <Input id="password" type="password" {...register('password')} />
-          {errors.password && (
-            <span className="text-xs text-red-600">
-              {errors.password.message}
-            </span>
-          )}
-        </div>
+          <form className="space-y-4" onSubmit={handleSubmit(handleSignIn)}>
+            <div className="space-y-2">
+              <Label htmlFor="email">Email</Label>
+              <Input
+                id="email"
+                {...register('email')}
+                input={{
+                  change: (val: string) => val,
+                  value: undefined,
+                }}
+              />
+              {errors.email && (
+                <span className="text-xs text-red-600">
+                  {errors.email.message}
+                </span>
+              )}
+            </div>
 
-        <Button
-          type="submit"
-          className="w-full"
-          disabled={isSubmitting || loadingSignIn || !isValid}
-        >
-          Entrar
-        </Button>
-      </form>
+            <div className="space-y-2">
+              <Label htmlFor="password">Senha</Label>
+              <Input
+                id="password"
+                type="password"
+                {...register('password')}
+                input={{
+                  change: (val: string) => val,
+                  value: undefined,
+                  type: 'password',
+                }}
+              />
+
+              {errors.password && (
+                <span className="text-xs text-red-600">
+                  {errors.password.message}
+                </span>
+              )}
+              <div className="text-right">
+                <a
+                  className="cursor-pointer text-xs font-normal text-primary"
+                  onClick={() => navigate('/forgot-password')}
+                >
+                  Esqueceu senha sua senha?
+                </a>
+              </div>
+            </div>
+
+            <Button
+              type="submit"
+              className="w-full"
+              disabled={isSubmitting || loadingSignIn || !isValid}
+            >
+              Entrar
+            </Button>
+          </form>
+
+          <footer className="flex justify-center gap-1">
+            <Label className="text-sm font-semibold">
+              Não tem uma conta ainda?
+            </Label>
+            <a
+              className="cursor-pointer text-sm font-semibold text-primary"
+              onClick={() => navigate('/sign-up')}
+            >
+              Inscrever-se
+            </a>
+          </footer>
+        </div>
+      </div>
     </>
   )
 }

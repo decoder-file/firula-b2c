@@ -23,9 +23,12 @@ import {
   getAvailableTime,
 } from '../../services/companies/block/available-time'
 import { useSchedulingStore } from '../../store/SchedulingStore'
+import { useRouterStore } from '../../store/UserRouter'
 
 export function CompanySelectDate() {
   const { setScheduling, scheduling } = useSchedulingStore()
+  const { setRouterName } = useRouterStore()
+
   const navigate = useNavigate()
   const { blockId, slug } = useParams()
 
@@ -60,6 +63,10 @@ export function CompanySelectDate() {
   }
 
   const handleSelectHour = (time: string) => {
+    if (!localStorage.getItem('token')) {
+      setOpenDialog(true)
+      return
+    }
     setScheduling({
       ...scheduling,
       hour: time,
@@ -67,6 +74,12 @@ export function CompanySelectDate() {
     })
 
     navigate(`/quadras/${slug}/${blockId}/confirmar-agendamento`)
+  }
+
+  const handleSignIn = () => {
+    setRouterName(`/quadras/decoder-file/${blockId}`)
+
+    navigate('/sign-in')
   }
 
   useEffect(() => {
@@ -167,16 +180,15 @@ export function CompanySelectDate() {
           <AlertDialogHeader>
             <AlertDialogTitle>Necessário realizar login</AlertDialogTitle>
             <AlertDialogDescription>
-              Para realizar um agenda é necessário está logado, deseja entrar?
+              Para realizar um agendamento é necessário está logado, deseja
+              realizar o login?
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel onClick={() => setOpenDialog(false)}>
               Cancel
             </AlertDialogCancel>
-            <AlertDialogAction onClick={() => navigate('/sign-in/client')}>
-              Entrar
-            </AlertDialogAction>
+            <AlertDialogAction onClick={handleSignIn}>Entrar</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
