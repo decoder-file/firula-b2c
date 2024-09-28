@@ -10,6 +10,14 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '../../components/ui/accordion'
+import { Avatar, AvatarFallback, AvatarImage } from '../../components/ui/avatar'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '../../components/ui/dropdown-menu'
+import { Bell } from 'lucide-react'
 
 const frequentlyAskedQuestions = [
   {
@@ -57,7 +65,7 @@ export function CompanyLayout({ title }: CompanyLayoutProps) {
 
   const handleLogin = () => {
     setRouterName(location.pathname)
-    navigate('/sign-in/client')
+    navigate('/sign-in')
   }
 
   const handleLogOut = () => {
@@ -65,7 +73,8 @@ export function CompanyLayout({ title }: CompanyLayoutProps) {
     localStorage.setItem('refreshToken', '')
     removeAdmin()
     removeRouterName()
-    navigate('/sign-in/client')
+
+    // navigate('/sign-in/client')
   }
 
   const handleOpenFAQ = () => {
@@ -82,14 +91,37 @@ export function CompanyLayout({ title }: CompanyLayoutProps) {
         <div className="mx-auto w-full max-w-7xl">
           <div className="flex justify-between p-4">
             <img src={LogoGreen} alt="Logo firula" className="h-10 w-10" />
-            {user.id ? (
-              <Button
-                variant="link"
-                className="text-black"
-                onClick={handleLogOut}
-              >
-                Sair
-              </Button>
+            {user.userId ? (
+              <div className="flex items-center gap-2">
+                <Button
+                  variant="link"
+                  size="icon"
+                  className="overflow-hidden rounded-full"
+                >
+                  <Bell size={20} />
+                </Button>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button
+                      variant="outline"
+                      size="icon"
+                      className="overflow-hidden rounded-full"
+                    >
+                      <Avatar>
+                        <AvatarImage
+                          src={`https://ui-avatars.com/api/?name=${user.name}&background=17A34A&color=fff`}
+                        />
+                        <AvatarFallback>CN</AvatarFallback>
+                      </Avatar>
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end">
+                    <DropdownMenuItem onClick={handleLogOut}>
+                      Sair
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
             ) : (
               <Button variant="link" onClick={handleLogin}>
                 Entrar | Cadastra-se
