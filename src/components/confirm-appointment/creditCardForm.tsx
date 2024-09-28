@@ -95,6 +95,10 @@ export function CreditCardForm({
           id="holder_name"
           {...register('holder_name')}
           placeholder="Digite o nome impresso no cartão"
+          input={{
+            change: (val: string) => val,
+            value: undefined,
+          }}
         />
         {errors.holder_name && (
           <span className="text-xs text-red-600">
@@ -138,7 +142,15 @@ export function CreditCardForm({
 
         <div className="mb-2 w-full space-y-2">
           <Label htmlFor="cvv">CVV</Label>
-          <Input id="cvv" {...register('cvv')} />
+          <Input
+            id="cvv"
+            {...register('cvv')}
+            placeholder="CVV"
+            input={{
+              change: (val: string) => val,
+              value: undefined,
+            }}
+          />
           {errors.cvv && (
             <span className="text-xs text-red-600">{errors.cvv.message}</span>
           )}

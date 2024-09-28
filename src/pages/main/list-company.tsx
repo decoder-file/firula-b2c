@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { SetStateAction, useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { useNavigate } from 'react-router-dom'
 import { FileImage } from 'lucide-react'
@@ -99,11 +99,17 @@ export function ListCompany() {
 
               <div className="mb-5 flex w-full items-center space-x-2">
                 <Input
-                  type="email"
+                  id="name"
                   placeholder="Pesquise pelo nome da quadra"
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
+                  input={{
+                    maxLength: 50,
+                    change: (e: {
+                      target: { value: SetStateAction<string> }
+                    }) => setSearch(e.target.value),
+                    value: search,
+                  }}
                 />
+
                 <Button type="submit" onClick={handleSearch}>
                   Pesquisar
                 </Button>

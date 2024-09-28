@@ -9,7 +9,7 @@ import { formatStringCapitalized } from '../../utils/functions'
 import { ScreenLoading } from '../../components/screen-loading'
 import { CreditCardForm } from '../../components/confirm-appointment/creditCardForm'
 import { PixForm } from '../../components/confirm-appointment/pixForm'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import {
   BlockType,
   getBlockById,
@@ -40,7 +40,8 @@ const paymentMethod = [
 ]
 
 export function ConfirmAppointment() {
-  const { blockId } = useParams()
+  const { blockId, slug } = useParams()
+  const navigate = useNavigate()
 
   const { scheduling } = useSchedulingStore()
 
@@ -79,7 +80,7 @@ export function ConfirmAppointment() {
         <PixForm
           paymentMethodSelected={paymentMethodSelected}
           setLoadingPayment={setLoadingPayment}
-          price={'R$ 100,00'}
+          price={blockInfo?.valueForHour}
         />
       )
     }
@@ -87,7 +88,7 @@ export function ConfirmAppointment() {
     if (paymentMethodSelected === 'credit-card') {
       return (
         <CreditCardForm
-          price={'R$ 100,00'}
+          price={blockInfo?.valueForHour}
           paymentMethodSelected={paymentMethodSelected}
           setLoadingPayment={setLoadingPayment}
         />
@@ -154,7 +155,12 @@ export function ConfirmAppointment() {
                     : {openingHours?.startTime} - {openingHours?.endTime}
                   </p>
 
-                  <Button className="mt-5 w-full">Escolher outra quadra</Button>
+                  <Button
+                    className="mt-5 w-full"
+                    onClick={() => navigate(`/quadras/${slug}/${blockId}`)}
+                  >
+                    Escolher outro horário
+                  </Button>
                 </div>
                 <Separator orientation="vertical" className="max-md:hidden" />
 

@@ -41,7 +41,7 @@ export const useUserStore = create<UserStore>()(
         }
       },
       {
-        name: 'user-store', // nome da chave no armazenamento local
+        name: 'client-user-store', // nome da chave no armazenamento local
         getStorage: () => localStorage, // ou sessionStorage
       },
     ),

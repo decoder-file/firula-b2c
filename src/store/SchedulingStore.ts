@@ -23,7 +23,7 @@ export const useSchedulingStore = create<SchedulingStore>()(
         }
       },
       {
-        name: 'scheduling-store', // nome da chave no armazenamento local
+        name: 'client-scheduling-store', // nome da chave no armazenamento local
         getStorage: () => localStorage, // ou sessionStorage
       },
     ),
