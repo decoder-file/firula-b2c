@@ -41,7 +41,8 @@ export const getAvailableTime = async ({
       success: true,
     }
   } catch (error) {
-    if (error.statusCode === 409) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    if ((error as any).statusCode === 409) {
       return {
         success: false,
         typeError: 'closedCompany',

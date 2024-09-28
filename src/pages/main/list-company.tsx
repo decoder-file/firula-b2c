@@ -66,6 +66,7 @@ export function ListCompany() {
     if (response && response.company.length > 0) {
       setCompanyInfo(response.company)
       setDisabledButton(false)
+      console.log(disabledButton)
       setTotalPages(response.totalPages)
     }
     setDisabledButton(true)
@@ -118,9 +119,9 @@ export function ListCompany() {
               {companyInfo?.map((company) => (
                 <div
                   key={company.id}
-                  className="mb-4 flex w-full rounded-2xl bg-white shadow-md"
+                  className="mb-4 flex h-full w-full rounded-2xl bg-white shadow-md"
                 >
-                  <div className="flex h-full w-full max-w-48 items-center justify-center rounded-s-2xl">
+                  <div className="flex  w-full max-w-48 items-center justify-center rounded-s-2xl ">
                     {company.imageUrl ? (
                       <img
                         src={`https://pub-ed847887b3d7415384bbf5488c674561.r2.dev/${company.imageUrl}.jpg`}
@@ -128,7 +129,7 @@ export function ListCompany() {
                         className="h-full w-full rounded-s-2xl object-cover"
                       />
                     ) : (
-                      <div className="flex h-full w-full flex-col items-center justify-center">
+                      <div className="flex h-full w-full  flex-col items-center justify-center ">
                         <FileImage />
                         <p className="mt-2 text-xs font-normal text-neutral-300">
                           Quadra sem imagem

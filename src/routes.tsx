@@ -9,6 +9,7 @@ import { CompanySelectDate } from './pages/main/company-select-date'
 import { ConfirmAppointment } from './pages/main/confirm-appointment'
 import { SignIn } from './pages/auth/sign-in'
 import { SignUp } from './pages/auth/sign-up'
+import { MyAppointments } from './pages/main/my-appointments'
 
 export const router = createBrowserRouter([
   {
@@ -66,6 +67,15 @@ export const router = createBrowserRouter([
       {
         path: '/quadras/:slug/:blockId/confirmar-agendamento',
         element: <ConfirmAppointment />,
+      },
+    ],
+  },
+  {
+    element: <CompanyLayout title="Meus agendamentos" />,
+    children: [
+      {
+        path: '/meus-agendamentos',
+        element: <MyAppointments />,
       },
     ],
   },

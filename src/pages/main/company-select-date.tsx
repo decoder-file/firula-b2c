@@ -17,7 +17,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '../../components/ui/alert-dialog'
-import { formatStringCapitalized } from '../../utils/functions'
+import { formatCurrency, formatStringCapitalized } from '../../utils/functions'
 import {
   AvailableTimeType,
   getAvailableTime,
@@ -149,7 +149,7 @@ export function CompanySelectDate() {
                           </p>
                           <Separator className="my-2 hidden md:block" />
                           <p className="text-sm font-light text-white">
-                            R$ {valueForHour}
+                            R$ {formatCurrency(valueForHour)}
                           </p>
                         </Button>
                       ))}

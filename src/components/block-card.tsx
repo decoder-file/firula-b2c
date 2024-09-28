@@ -20,7 +20,7 @@ type BlockCardProps = {
 export function BlockCard({ block, company, onClick }: BlockCardProps) {
   return (
     <div className="mb-4 flex w-full rounded-2xl bg-white shadow-md">
-      <div className=" flex h-full w-full max-w-48 items-center justify-center rounded-s-2xl ">
+      <div className=" flex w-full max-w-48 items-center justify-center rounded-s-2xl ">
         {block?.imageUrl ? (
           <img
             src={`https://pub-ed847887b3d7415384bbf5488c674561.r2.dev/${block?.imageUrl}`}
@@ -41,7 +41,7 @@ export function BlockCard({ block, company, onClick }: BlockCardProps) {
           {block.sports.length > 0 &&
             block.sports.map((sport) => (
               <Badge key={sport} variant="default">
-                {translateSportToPortuguese(sport as Sport)}
+                {translateSportToPortuguese(sport.toLocaleUpperCase() as Sport)}
               </Badge>
             ))}
         </div>

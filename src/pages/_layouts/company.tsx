@@ -17,7 +17,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '../../components/ui/dropdown-menu'
-import { Bell } from 'lucide-react'
+import { Bell, Plus } from 'lucide-react'
 
 const frequentlyAskedQuestions = [
   {
@@ -73,8 +73,6 @@ export function CompanyLayout({ title }: CompanyLayoutProps) {
     localStorage.setItem('refreshToken', '')
     removeAdmin()
     removeRouterName()
-
-    // navigate('/sign-in/client')
   }
 
   const handleOpenFAQ = () => {
@@ -103,6 +101,22 @@ export function CompanyLayout({ title }: CompanyLayoutProps) {
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button
+                      variant="link"
+                      size="icon"
+                      className="overflow-hidden rounded-full"
+                    >
+                      <Plus />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end">
+                    <DropdownMenuItem onClick={() => navigate('/quadras')}>
+                      Agendar novo Horário
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button
                       variant="outline"
                       size="icon"
                       className="overflow-hidden rounded-full"
@@ -116,6 +130,11 @@ export function CompanyLayout({ title }: CompanyLayoutProps) {
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end">
+                    <DropdownMenuItem
+                      onClick={() => navigate('/meus-agendamentos')}
+                    >
+                      Meus Agendamentos
+                    </DropdownMenuItem>
                     <DropdownMenuItem onClick={handleLogOut}>
                       Sair
                     </DropdownMenuItem>
