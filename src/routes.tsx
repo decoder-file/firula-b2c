@@ -10,6 +10,7 @@ import { ConfirmAppointment } from './pages/main/confirm-appointment'
 import { SignIn } from './pages/auth/sign-in'
 import { SignUp } from './pages/auth/sign-up'
 import { MyAppointments } from './pages/main/my-appointments'
+import { SuccessAppointment } from './pages/main/success-appointments'
 
 export const router = createBrowserRouter([
   {
@@ -76,6 +77,15 @@ export const router = createBrowserRouter([
       {
         path: '/meus-agendamentos',
         element: <MyAppointments />,
+      },
+    ],
+  },
+  {
+    element: <CompanyLayout title="Agendamento realizado" />,
+    children: [
+      {
+        path: '/agendamento-realizado',
+        element: <SuccessAppointment />,
       },
     ],
   },

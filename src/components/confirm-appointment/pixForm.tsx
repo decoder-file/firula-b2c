@@ -62,7 +62,7 @@ export function PixForm({
       })
 
       if (response.success) {
-        // navigate('/main')
+        navigate('/agendamento-realizado')
       }
     } catch (error) {
       setLoadingPayment(false)

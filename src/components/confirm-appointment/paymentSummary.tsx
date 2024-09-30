@@ -1,3 +1,4 @@
+import { formatCurrency } from '../../utils/functions'
 import { Separator } from '../ui/separator'
 
 type PaymentSummaryProps = {
@@ -16,7 +17,9 @@ export function PaymentSummary({ price }: PaymentSummaryProps) {
       <Separator className="mb-2 mt-2 opacity-50" />
       <div className="flex justify-between">
         <p className="text-sm font-light">Total da reserva</p>
-        <p className="text-sm font-semibold">R$ {price}</p>
+        <p className="text-sm font-semibold">
+          R$ {formatCurrency(price ?? '')}
+        </p>
       </div>
       <Separator className="mt-2 opacity-50" />
     </div>
