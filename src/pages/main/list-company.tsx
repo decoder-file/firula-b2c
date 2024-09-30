@@ -124,7 +124,7 @@ export function ListCompany() {
                   <div className="flex  w-full max-w-48 items-center justify-center rounded-s-2xl ">
                     {company.imageUrl ? (
                       <img
-                        src={`https://pub-ed847887b3d7415384bbf5488c674561.r2.dev/${company.imageUrl}.jpg`}
+                        src={`https://pub-ed847887b3d7415384bbf5488c674561.r2.dev/${company.imageUrl}`}
                         alt="Imagem da quadra"
                         className="h-full w-full rounded-s-2xl object-cover"
                       />
