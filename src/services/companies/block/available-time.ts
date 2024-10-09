@@ -16,6 +16,8 @@ export type GetAvailableTimeResponseType = {
   data: {
     courtTimes: AvailableTimeType[]
     valueForHour: string
+    dayUseActive: boolean
+    valueForHourDayUse: string
   }
 }
 
@@ -24,6 +26,8 @@ export type FetchAvailableTimeResponseType = {
   valueForHour?: string
   success: boolean
   typeError?: string
+  dayUseActive?: boolean
+  valueForHourDayUse?: string
 }
 
 export const getAvailableTime = async ({
@@ -39,6 +43,8 @@ export const getAvailableTime = async ({
       courtTimes: response.data.courtTimes,
       valueForHour: response.data.valueForHour,
       success: true,
+      dayUseActive: response.data.dayUseActive,
+      valueForHourDayUse: response.data.valueForHourDayUse,
     }
   } catch (error) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

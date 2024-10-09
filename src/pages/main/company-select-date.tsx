@@ -38,6 +38,8 @@ export function CompanySelectDate() {
   const [dateAvailable, setDateAvailable] = useState<AvailableTimeType[]>()
   const [availableCourt, setAvailableCourt] = useState<boolean>(false)
   const [valueForHour, setValueForHour] = useState<string>('')
+  const [activeDayUse, setActiveDayUse] = useState<boolean>(false)
+  const [valueForHourDayUse, setValueForHourDayUse] = useState<string>('')
 
   const fetchAvailableTime = async () => {
     const dateString = moment(date, 'ddd MMM DD YYYY HH:mm:ss ZZ').format(
@@ -58,6 +60,8 @@ export function CompanySelectDate() {
       setValueForHour(response.valueForHour ?? '')
       setAvailableCourt(true)
       setDateAvailable(response.courtTimes)
+      setActiveDayUse(response.dayUseActive ?? false)
+      setValueForHourDayUse(response.valueForHourDayUse ?? '')
     }
     setLoading(false)
   }
@@ -71,6 +75,21 @@ export function CompanySelectDate() {
       ...scheduling,
       hour: time,
       date: moment(date).format('YYYY-MM-DD'),
+    })
+
+    navigate(`/quadras/${slug}/${blockId}/confirmar-agendamento`)
+  }
+
+  const handleSelectDayUse = () => {
+    if (!localStorage.getItem('token')) {
+      setOpenDialog(true)
+      return
+    }
+    setScheduling({
+      ...scheduling,
+      hour: '',
+      date: moment(date).format('YYYY-MM-DD'),
+      isDayUse: true,
     })
 
     navigate(`/quadras/${slug}/${blockId}/confirmar-agendamento`)
@@ -132,28 +151,52 @@ export function CompanySelectDate() {
                   </h1>
 
                   {availableCourt ? (
-                    <div className="mb-2 w-full max-w-full items-center justify-center gap-2 sm:grid sm:grid-cols-5">
-                      {dateAvailable?.map((e) => (
-                        <Button
-                          key={e.hour}
-                          className={`mb-2 items-center justify-center rounded-2xl p-4 max-sm:w-full max-sm:justify-between sm:flex sm:h-20 sm:flex-col ${
-                            e.status === 'busy'
-                              ? 'bg-gray-400 text-gray-500'
-                              : 'bg-primary text-white'
-                          }`}
-                          onClick={() => handleSelectHour(e.hour)}
-                          disabled={e.status !== 'available'}
-                        >
-                          <p className="text-sm font-semibold text-white">
-                            {e.hour}
-                          </p>
-                          <Separator className="my-2 hidden md:block" />
-                          <p className="text-sm font-light text-white">
-                            R$ {formatCurrency(valueForHour)}
-                          </p>
-                        </Button>
-                      ))}
-                    </div>
+                    <>
+                      {activeDayUse ? (
+                        <div className="grid h-full max-w-full items-center justify-center gap-2 text-center">
+                          <div className="w-full">
+                            <p className="mb-3 w-full">
+                              Essa quadra está disponível para DayUse no dia{' '}
+                              {formatStringCapitalized(
+                                moment(date).format('DD/MM'),
+                              )}
+                            </p>
+
+                            <p>R$ {formatCurrency(valueForHourDayUse)}</p>
+                            <Button
+                              type="submit"
+                              className="w-full"
+                              onClick={handleSelectDayUse}
+                            >
+                              Reservar DayUse
+                            </Button>
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="mb-2 w-full max-w-full items-center justify-center gap-2 sm:grid sm:grid-cols-5">
+                          {dateAvailable?.map((e) => (
+                            <Button
+                              key={e.hour}
+                              className={`mb-2 items-center justify-center rounded-2xl p-4 max-sm:w-full max-sm:justify-between sm:flex sm:h-20 sm:flex-col ${
+                                e.status === 'busy'
+                                  ? 'bg-gray-400 text-gray-500'
+                                  : 'bg-primary text-white'
+                              }`}
+                              onClick={() => handleSelectHour(e.hour)}
+                              disabled={e.status !== 'available'}
+                            >
+                              <p className="text-sm font-semibold text-white">
+                                {e.hour}
+                              </p>
+                              <Separator className="my-2 hidden md:block" />
+                              <p className="text-sm font-light text-white">
+                                R$ {formatCurrency(valueForHour)}
+                              </p>
+                            </Button>
+                          ))}
+                        </div>
+                      )}
+                    </>
                   ) : (
                     <div className="grid h-full max-w-full items-center justify-center gap-2 text-center">
                       <div className="w-full">

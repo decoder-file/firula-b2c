@@ -69,6 +69,8 @@ export function ConfirmAppointment() {
           ],
       )
 
+      console.log('###openingHours', openingHours)
+
       setOpeningHours(openingHours)
     }
     setLoadingBlockInfo(false)
@@ -80,7 +82,11 @@ export function ConfirmAppointment() {
         <PixForm
           paymentMethodSelected={paymentMethodSelected}
           setLoadingPayment={setLoadingPayment}
-          price={blockInfo?.valueForHour}
+          price={
+            scheduling.isDayUse
+              ? openingHours?.valueForHourDayUse
+              : blockInfo?.valueForHour
+          }
         />
       )
     }

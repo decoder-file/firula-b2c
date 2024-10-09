@@ -4,6 +4,7 @@ import { devtools, persist } from 'zustand/middleware'
 export type Scheduling = {
   hour: string
   date: string
+  isDayUse: boolean
 }
 
 type SchedulingStore = {
@@ -17,9 +18,10 @@ export const useSchedulingStore = create<SchedulingStore>()(
     persist(
       (set) => {
         return {
-          scheduling: { hour: '', date: '' },
+          scheduling: { hour: '', date: '', isDayUse: false },
           setScheduling: (scheduling) => set({ scheduling }),
-          removeScheduling: () => set({ scheduling: { hour: '', date: '' } }),
+          removeScheduling: () =>
+            set({ scheduling: { hour: '', date: '', isDayUse: false } }),
         }
       },
       {

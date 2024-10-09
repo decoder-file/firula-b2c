@@ -6,6 +6,8 @@ export type OpeningHoursType = {
   startTime: string
   endTime: string
   active: boolean
+  valueForHourDayUse: string
+  dayUseActive: boolean
 }
 
 export type BlockType = {
