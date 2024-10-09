@@ -1,10 +1,10 @@
 import { Helmet } from 'react-helmet-async'
 
-import { CardSuccess } from '../../components/success-appointment/cardSuccess'
+import { PixSuccess } from '../../components/success-appointment/pixSuccess'
 
 export function SuccessAppointment() {
   const renderPaymentMethod = () => {
-    return <CardSuccess />
+    return <PixSuccess />
   }
   return (
     <>

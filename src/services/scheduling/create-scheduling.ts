@@ -7,11 +7,13 @@ import moment from 'moment'
 export type CreateSchedulingResponseType = {
   message?: string
   success: boolean
+  pixQrCode?: string
 }
 
 export type CreateSchedulingResponseApiType = {
   data: {
     scheduling: SchedulingType
+    pixQrCode?: string
   }
 }
 
@@ -55,6 +57,7 @@ export const createScheduling = async ({
     toast.success('Agendamento realizado com sucesso!')
     return {
       success: true,
+      pixQrCode: response.data.pixQrCode,
     }
   } catch (error: any) {
     if (error.statusCode === 409) {

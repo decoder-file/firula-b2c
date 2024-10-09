@@ -31,7 +31,7 @@ export function PixForm({
   setLoadingPayment,
 }: PixFormProps) {
   const { setRouterName } = useRouterStore()
-  const { scheduling } = useSchedulingStore()
+  const { scheduling, setScheduling } = useSchedulingStore()
   const { user } = useUserStore()
 
   const { blockId } = useParams()
@@ -62,6 +62,12 @@ export function PixForm({
       })
 
       if (response.success) {
+        setScheduling({
+          date: '',
+          hour: '',
+          isDayUse: scheduling.isDayUse,
+          pixQrCode: response.pixQrCode ?? '',
+        })
         navigate('/agendamento-realizado')
       }
     } catch (error) {
