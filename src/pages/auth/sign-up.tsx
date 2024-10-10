@@ -31,7 +31,7 @@ const signUpForm = z.object({
     .max(255, 'Sobrenome muito grande'),
   email: z.string().email('Email inválido'),
   cpf: z.string().min(1, 'CPF é obrigatória'),
-  password: z.string().min(8, 'Senha muito curta, tente uma senha mais forte.'),
+  password: z.string().min(1, 'Senha muito curta, tente uma senha mais forte.'),
   confirmPassword: z.string().min(1, 'Confirmação de senha é obrigatória'),
 })
 
@@ -67,6 +67,12 @@ export function SignUp() {
 
       if (data.password !== data.confirmPassword) {
         toast.error('As senhas devem ser iguais!')
+        setLoadingSignUp(false)
+        return
+      }
+
+      if (data.password.length < 4) {
+        toast.error('A senha deve ter no mínimo 4 caracteres!')
         setLoadingSignUp(false)
         return
       }
@@ -282,7 +288,9 @@ export function SignUp() {
             <Button
               type="submit"
               className="w-full"
-              disabled={loadingSignUp || isSubmitting || !isValid}
+              disabled={
+                loadingSignUp || isSubmitting || !isValid || !acceptTerms
+              }
             >
               Cadastrar
             </Button>
