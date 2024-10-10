@@ -2,6 +2,8 @@ import { SetStateAction, useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { useNavigate } from 'react-router-dom'
 import { FileImage } from 'lucide-react'
+import LoadingGif from '../../assets/white-loading.gif'
+
 import {
   CompanyType,
   fetchAllCompany,
@@ -185,9 +187,12 @@ export function ListCompany() {
               </Pagination>
             </>
           ) : (
-            <p className="text-xs opacity-40">
-              Carregando quadras disponíveis...
-            </p>
+            <div className="mb-8 flex flex-col items-center justify-center">
+              <img src={LoadingGif} alt="Loading..." className="flex w-40" />
+              <p className="mt-8 text-center text-base opacity-40">
+                Estamos carregando as melhores quadras para você!
+              </p>
+            </div>
           )}
         </div>
       </div>

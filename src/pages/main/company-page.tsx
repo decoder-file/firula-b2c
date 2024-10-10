@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { useNavigate, useParams } from 'react-router-dom'
+import LoadingGif from '../../assets/white-loading.gif'
 
 import { formatStringCapitalized } from '../../utils/functions'
 
@@ -85,9 +86,12 @@ export function CompanyPage() {
             </>
           ) : (
             <>
-              <p className="text-xs  opacity-40">
-                Carregando informações da quadra...
-              </p>
+              <div className="mb-8 flex flex-col items-center justify-center">
+                <img src={LoadingGif} alt="Loading..." className="flex w-40" />
+                <p className="mt-8 text-center text-base opacity-40">
+                  Estamos carregando as melhores quadras para você!
+                </p>
+              </div>
             </>
           )}
         </div>
