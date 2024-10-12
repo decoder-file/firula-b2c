@@ -19,6 +19,7 @@ import { useState } from 'react'
 import { toast } from 'sonner'
 import InputMask from 'react-input-mask'
 import { cn } from '../../lib/utils'
+import { useSchedulingStore } from '../../store/SchedulingStore'
 
 const signInForm = z.object({
   number: z.string().min(16, 'Número do cartão inválido'),
@@ -39,6 +40,8 @@ export function CreditCardForm({
   paymentMethodSelected,
   setLoadingPayment,
 }: CreditCardFormProps) {
+  const { scheduling } = useSchedulingStore()
+
   const [acceptTerm, setAcceptTerm] = useState(false)
   const [monthSelected, setMonthSelected] = useState('')
   const [yearSelected, setYearSelected] = useState('')
@@ -158,7 +161,7 @@ export function CreditCardForm({
       </div>
       <Separator className="mb-2 mt-2 opacity-50" />
 
-      <PaymentSummary price={price} />
+      <PaymentSummary price={price} duration={scheduling.duration} />
 
       <div className="mb-5 mt-5 flex items-center space-x-2">
         <Checkbox id="terms2" onClick={() => setAcceptTerm(!acceptTerm)} />
