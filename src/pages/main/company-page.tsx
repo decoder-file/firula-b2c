@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { useNavigate, useParams } from 'react-router-dom'
 import LoadingGif from '../../assets/white-loading.gif'
+import BlockNotFound from '../../assets/block-not-found.gif'
 
 import { formatStringCapitalized } from '../../utils/functions'
 
@@ -64,10 +65,12 @@ export function CompanyPage() {
               </h3>
 
               {blocks.length === 0 ? (
-                <div className="flex h-screen w-full flex-col items-center justify-center  text-center">
-                  <p className="text-base opacity-40">
-                    Não há quadras disponíveis para reserva.
-                  </p>
+                <div className="mb-5 flex flex-col items-center justify-center  text-center">
+                  <img
+                    src={BlockNotFound}
+                    alt="Loading..."
+                    className="flex w-60"
+                  />
                 </div>
               ) : (
                 company &&

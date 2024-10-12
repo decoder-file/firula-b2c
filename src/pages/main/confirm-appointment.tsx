@@ -69,8 +69,6 @@ export function ConfirmAppointment() {
           ],
       )
 
-      console.log('###openingHours', openingHours)
-
       setOpeningHours(openingHours)
     }
     setLoadingBlockInfo(false)

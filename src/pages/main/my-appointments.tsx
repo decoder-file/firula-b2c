@@ -59,7 +59,7 @@ export function MyAppointments() {
                     return (
                       <div
                         key={date}
-                        className="w-full rounded-lg bg-gray-100 p-5"
+                        className="flex w-full flex-col gap-3 rounded-lg bg-gray-100 p-5"
                       >
                         <h1 className="mb-3 text-sm font-semibold text-slate-500">
                           {moment(date).format('DD/MM/YYYY')}

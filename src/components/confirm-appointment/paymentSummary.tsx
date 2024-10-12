@@ -3,15 +3,16 @@ import { Separator } from '../ui/separator'
 
 type PaymentSummaryProps = {
   price: string | undefined
+  duration: string
 }
 
-export function PaymentSummary({ price }: PaymentSummaryProps) {
+export function PaymentSummary({ price, duration }: PaymentSummaryProps) {
   console.log('price', price)
 
   let rate = 0
 
   if (price) {
-    rate = (Number(price) / 100) * 0.04 * 100
+    rate = ((Number(price) * Number(duration)) / 100) * 0.04 * 100
   }
 
   return (
@@ -34,7 +35,10 @@ export function PaymentSummary({ price }: PaymentSummaryProps) {
       <div className="flex justify-between">
         <p className="text-sm font-light">Total da reserva</p>
         <p className="text-sm font-semibold">
-          R$ {formatCurrency(price ?? '')}
+          R${' '}
+          {price
+            ? formatCurrency((Number(duration) * Number(price)).toString())
+            : '0,00'}
         </p>
       </div>
       <Separator className="mt-2 opacity-50" />

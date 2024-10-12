@@ -19,29 +19,29 @@ export function AppointmentCard({
   appointment,
   onPressCanceled,
 }: AppointmentCardProps) {
-  const formattedStatus: Record<'confirmed' | 'canceled' | 'pending', string> =
-    {
-      confirmed: 'Confirmado',
-      canceled: 'Cancelado',
-      pending: 'Pendente',
-    }
+  const formattedStatus: Record<'paid' | 'canceled' | 'processing', string> = {
+    paid: 'Confirmado',
+    canceled: 'Cancelado',
+    processing: 'Aguardando pagamento',
+  }
   return (
     <div className="flex flex-col gap-3">
       <div className="rounded-lg bg-white p-4">
-        <div className="mb-2 flex items-start justify-between gap-2">
+        <div className=" flex items-start justify-between gap-2">
           <div className="gap-2 md:flex">
             <h1 className="text-lg font-semibold">
-              {appointment.companyBlock.name}
+              {appointment.company?.name}
             </h1>
+
             <Badge
               variant={
                 appointment.status === 'canceled' ? 'destructive' : 'default'
               }
-              className={`${appointment.status === 'pending' && 'bg-yellow-500'}`}
+              className={`${appointment.status === 'processing' && 'bg-yellow-500'} ${appointment.status === 'canceled' && 'bg-red-400'}`}
             >
               {
                 formattedStatus[
-                  appointment.status as 'confirmed' | 'canceled' | 'pending'
+                  appointment.status as 'paid' | 'canceled' | 'processing'
                 ]
               }
             </Badge>
@@ -56,12 +56,17 @@ export function AppointmentCard({
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
+        <p className="mb-2 text-xs font-light opacity-50">
+          {appointment.companyBlock.name}
+        </p>
+
         <div className="flex items-center gap-3 ">
           <div className="flex items-center gap-1">
             <Clock size={16} />
             <p className="text-xs">
               {moment(appointment.date).format('DD/MM')} as{' '}
-              {appointment.companyBlockHour?.startTime}
+              {appointment.companyBlockHour?.startTime} até{' '}
+              {appointment.companyBlockHour?.endTime}
             </p>
           </div>
           <div className="flex items-center  gap-1">

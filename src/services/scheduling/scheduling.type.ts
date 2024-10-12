@@ -28,6 +28,7 @@ export type AppointmentType = {
   companyBlock: BlockType
   company?: {
     companyAddress: AddressType[]
+    name: string
   }
   companyBlockHour?: {
     startTime: string

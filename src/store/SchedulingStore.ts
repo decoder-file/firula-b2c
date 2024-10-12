@@ -6,6 +6,7 @@ export type Scheduling = {
   date: string
   isDayUse: boolean
   pixQrCode: string
+  duration: string
 }
 
 type SchedulingStore = {
@@ -19,7 +20,13 @@ export const useSchedulingStore = create<SchedulingStore>()(
     persist(
       (set) => {
         return {
-          scheduling: { hour: '', date: '', isDayUse: false, pixQrCode: '' },
+          scheduling: {
+            hour: '',
+            date: '',
+            isDayUse: false,
+            pixQrCode: '',
+            duration: '',
+          },
           setScheduling: (scheduling) => set({ scheduling }),
           removeScheduling: () =>
             set({
@@ -28,6 +35,7 @@ export const useSchedulingStore = create<SchedulingStore>()(
                 date: '',
                 isDayUse: false,
                 pixQrCode: '',
+                duration: '',
               },
             }),
         }

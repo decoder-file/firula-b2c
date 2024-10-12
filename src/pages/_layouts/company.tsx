@@ -88,7 +88,12 @@ export function CompanyLayout({ title }: CompanyLayoutProps) {
       <header className="mt-3">
         <div className="mx-auto w-full max-w-7xl">
           <div className="flex justify-between p-4">
-            <img src={LogoGreen} alt="Logo firula" className="h-10 w-10" />
+            <img
+              src={LogoGreen}
+              alt="Logo firula"
+              className="h-10 w-10 cursor-pointer"
+              onClick={() => navigate('/quadras')}
+            />
             {user.userId ? (
               <div className="flex items-center gap-2">
                 <Button
@@ -134,6 +139,9 @@ export function CompanyLayout({ title }: CompanyLayoutProps) {
                       onClick={() => navigate('/meus-agendamentos')}
                     >
                       Meus Agendamentos
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => navigate('/quadras')}>
+                      Novo Agendamento
                     </DropdownMenuItem>
                     <DropdownMenuItem onClick={handleLogOut}>
                       Sair
@@ -206,7 +214,12 @@ export function CompanyLayout({ title }: CompanyLayoutProps) {
         <Separator className="mb-3 opacity-50" />
         <div className="w-full max-w-7xl px-4">
           <div className="flex items-center">
-            <img src={LogoGreen} alt="Logo firula" className="h-8 w-8" />
+            <img
+              src={LogoGreen}
+              alt="Logo firula"
+              className="h-8 w-8 cursor-pointer"
+              onClick={() => navigate('/quadras')}
+            />
             <h4 className="pl-3 text-xs font-light">Reserva de quadra</h4>
           </div>
           <Separator className="mt-3 opacity-50" />

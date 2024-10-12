@@ -10,6 +10,7 @@ export type AvailableTimeType = {
 export type GetAvailableTimeRequestType = {
   date: string
   blockId: string
+  duration: string
 }
 
 export type GetAvailableTimeResponseType = {
@@ -33,9 +34,14 @@ export type FetchAvailableTimeResponseType = {
 export const getAvailableTime = async ({
   date,
   blockId,
+  duration,
 }: GetAvailableTimeRequestType): Promise<FetchAvailableTimeResponseType> => {
   try {
-    const url = `/company-block/available-times?blockId=${blockId}&date=${date}`
+    let url = `/company-block/available-times?blockId=${blockId}&date=${date}`
+
+    if (duration) {
+      url = `${url}&duration=${duration}`
+    }
 
     const response: GetAvailableTimeResponseType = await api.get(url)
 

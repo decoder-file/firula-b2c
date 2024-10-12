@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet-async'
 import { useNavigate } from 'react-router-dom'
 import { FileImage } from 'lucide-react'
 import LoadingGif from '../../assets/white-loading.gif'
+import BlockNotFound from '../../assets/block-not-found.gif'
 
 import {
   CompanyType,
@@ -118,49 +119,66 @@ export function ListCompany() {
                 </Button>
               </div>
 
-              {companyInfo?.map((company) => (
-                <div
-                  key={company.id}
-                  className="mb-4 flex h-full w-full rounded-2xl bg-white shadow-md"
-                >
-                  <div className="flex  w-full max-w-48 items-center justify-center rounded-s-2xl ">
-                    {company.imageUrl ? (
-                      <img
-                        src={`https://pub-ed847887b3d7415384bbf5488c674561.r2.dev/${company.imageUrl}`}
-                        alt="Imagem da quadra"
-                        className="h-full w-full rounded-s-2xl object-cover"
-                      />
-                    ) : (
-                      <div className="flex h-full w-full  flex-col items-center justify-center ">
-                        <FileImage />
-                        <p className="mt-2 text-xs font-normal text-neutral-300">
-                          Quadra sem imagem
-                        </p>
-                      </div>
-                    )}
-                  </div>
-                  <div className="flex w-full flex-col justify-center p-3">
-                    <p className="mb-1 text-xl font-semibold">{company.name}</p>
-                    <p className="text-xs opacity-60">
-                      <span className="font-semibold">Endereço:</span>{' '}
-                      {company.companyAddress[0]?.street},{' '}
-                      {company.companyAddress[0]?.number},{' '}
-                      {company.companyAddress[0]?.neighborhood},{' '}
-                      {company.companyAddress[0]?.zipCode}
-                    </p>
-                    <p className="text-xs opacity-60">
-                      <span className="font-semibold">Telefone:</span>{' '}
-                      {company.mobilePhone}
-                    </p>
-                    <Separator className="my-2 opacity-30" />
-                    <Button
-                      onClick={() => navigate(`/quadras/${company.slug}`)}
-                    >
-                      Selecionar quadra
-                    </Button>
-                  </div>
+              {companyInfo && companyInfo.length === 0 ? (
+                <div className="mb-5  flex flex-col items-center justify-center text-center">
+                  <img
+                    src={BlockNotFound}
+                    alt="Loading..."
+                    className="flex w-60"
+                  />
                 </div>
-              ))}
+              ) : (
+                companyInfo &&
+                companyInfo.map((company) => {
+                  return (
+                    <>
+                      <div
+                        key={company.id}
+                        className="mb-4 flex h-full w-full rounded-2xl bg-white shadow-md"
+                      >
+                        <div className="flex  w-full max-w-48 items-center justify-center rounded-s-2xl ">
+                          {company.imageUrl ? (
+                            <img
+                              src={`https://pub-ed847887b3d7415384bbf5488c674561.r2.dev/${company.imageUrl}`}
+                              alt="Imagem da quadra"
+                              className="h-full w-full rounded-s-2xl object-cover"
+                            />
+                          ) : (
+                            <div className="flex h-full w-full  flex-col items-center justify-center ">
+                              <FileImage />
+                              <p className="mt-2 text-xs font-normal text-neutral-300">
+                                Quadra sem imagem
+                              </p>
+                            </div>
+                          )}
+                        </div>
+                        <div className="flex w-full flex-col justify-center p-3">
+                          <p className="mb-1 text-xl font-semibold">
+                            {company.name}
+                          </p>
+                          <p className="text-xs opacity-60">
+                            <span className="font-semibold">Endereço:</span>{' '}
+                            {company.companyAddress[0]?.street},{' '}
+                            {company.companyAddress[0]?.number},{' '}
+                            {company.companyAddress[0]?.neighborhood},{' '}
+                            {company.companyAddress[0]?.zipCode}
+                          </p>
+                          <p className="text-xs opacity-60">
+                            <span className="font-semibold">Telefone:</span>{' '}
+                            {company.mobilePhone}
+                          </p>
+                          <Separator className="my-2 opacity-30" />
+                          <Button
+                            onClick={() => navigate(`/quadras/${company.slug}`)}
+                          >
+                            Selecionar quadra
+                          </Button>
+                        </div>
+                      </div>
+                    </>
+                  )
+                })
+              )}
 
               <Pagination>
                 <PaginationContent>

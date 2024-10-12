@@ -67,6 +67,7 @@ export function PixForm({
           hour: '',
           isDayUse: scheduling.isDayUse,
           pixQrCode: response.pixQrCode ?? '',
+          duration: scheduling.duration,
         })
         navigate('/agendamento-realizado')
       }
@@ -92,7 +93,7 @@ export function PixForm({
           pagamento.
         </p>
 
-        <PaymentSummary price={price} />
+        <PaymentSummary price={price} duration={scheduling.duration} />
 
         <div className="mb-5 mt-5 flex items-center space-x-2">
           <Checkbox id="terms2" onClick={() => setAcceptTerm(!acceptTerm)} />

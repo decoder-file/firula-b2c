@@ -40,6 +40,7 @@ export function CompanySelectDate() {
   const [valueForHour, setValueForHour] = useState<string>('')
   const [activeDayUse, setActiveDayUse] = useState<boolean>(false)
   const [valueForHourDayUse, setValueForHourDayUse] = useState<string>('')
+  const [durationSelection, setDurationSelection] = useState<string>('1')
 
   const fetchAvailableTime = async () => {
     const dateString = moment(date, 'ddd MMM DD YYYY HH:mm:ss ZZ').format(
@@ -48,6 +49,7 @@ export function CompanySelectDate() {
     const response = await getAvailableTime({
       date: dateString,
       blockId: blockId ?? '',
+      duration: durationSelection,
     })
 
     if (response) {
@@ -75,6 +77,8 @@ export function CompanySelectDate() {
       ...scheduling,
       hour: time,
       date: moment(date).format('YYYY-MM-DD'),
+      isDayUse: false,
+      duration: durationSelection,
     })
 
     navigate(`/quadras/${slug}/${blockId}/confirmar-agendamento`)
@@ -103,7 +107,7 @@ export function CompanySelectDate() {
 
   useEffect(() => {
     fetchAvailableTime()
-  }, [date])
+  }, [date, durationSelection])
 
   const footerCalendar = () => {
     return (
@@ -120,10 +124,32 @@ export function CompanySelectDate() {
 
       <div className="flex w-full max-w-7xl items-center px-4">
         <div className="mb-5 mt-10 flex w-full flex-col max-sm:items-center">
-          <h1 className="text-xl font-semibold ">Selecione a data e horário</h1>
+          <h1 className="text-lg font-semibold">Selecione a data e horário</h1>
           <h4 className="mt-1 text-sm font-light text-black">
             Reservas são para uma única data.
           </h4>
+
+          <div>
+            <p className="mt-3 text-base font-semibold">Duração</p>
+            <div className="flex gap-1">
+              <div
+                className={`w-8 cursor-pointer rounded-sm  ${durationSelection === '1' ? 'bg-primary' : 'bg-zinc-200'} pb-1 pt-1`}
+                onClick={() => setDurationSelection('1')}
+              >
+                <p className="text-center text-xs font-semibold text-white">
+                  1h
+                </p>
+              </div>
+              <div
+                className={`w-8 cursor-pointer rounded-sm ${durationSelection === '2' ? 'bg-primary' : 'bg-zinc-200'} pb-1 pt-1`}
+                onClick={() => setDurationSelection('2')}
+              >
+                <p className="text-center text-xs font-semibold text-white">
+                  2h
+                </p>
+              </div>
+            </div>
+          </div>
           {!loading ? (
             <div className="mt-6 h-full sm:flex">
               <div className="flex flex-col items-center rounded-2xl bg-zinc-200 p-3 sm:max-w-80">
