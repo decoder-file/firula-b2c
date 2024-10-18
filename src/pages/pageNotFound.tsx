@@ -14,6 +14,9 @@ export function PageNotFound() {
           <h1 className="mt-4 text-3xl font-bold tracking-tight sm:text-5xl">
             Página não encontrada
           </h1>
+          <h1 className="mt-4 text-3xl font-bold tracking-tight sm:text-5xl">
+            Sandbox
+          </h1>
           <p className="mt-6 text-base leading-7">
             Lamentamos, mas não conseguimos encontrar a página que procura.
           </p>
