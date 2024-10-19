@@ -88,7 +88,7 @@ export function ListCompany() {
                 Reserve seu horário nas melhores quadras do Brasil
               </h1>
               <h3 className="mb-6 text-center text-base font-light opacity-60">
-                Com o Firula você consegue reservas seus horários de forma
+                Com o Firula você consegue reservar seus horários de forma
                 rápida e prática nas melhores quadras do Brasil
               </h3>
 

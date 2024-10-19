@@ -51,15 +51,15 @@ export function CompanyPage() {
           {!loading ? (
             <>
               <h1 className="mb-2 mt-6 text-center text-3xl font-light ">
-                Reserve seu horário na{'  '}
+                Reserve seu horário na{' '}
                 <span className="font-semibold">
                   {formatStringCapitalized(company?.name ?? '')}
                 </span>
               </h1>
               <h3 className="mb-6 text-center text-base font-light  opacity-60">
-                Reserve seu horário na{' '}
+                Reserve seu horário na
                 <span className="ml-2 mr-2 font-semibold">
-                  {formatStringCapitalized(company?.name ?? '')}{' '}
+                  {formatStringCapitalized(company?.name ?? '')}
                 </span>
                 e garanta a diversão com seus amigos.
               </h3>

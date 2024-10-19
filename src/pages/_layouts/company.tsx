@@ -151,7 +151,7 @@ export function CompanyLayout({ title }: CompanyLayoutProps) {
               </div>
             ) : (
               <Button variant="link" onClick={handleLogin}>
-                Entrar | Cadastra-se
+                Entrar | Cadastrar-se
               </Button>
             )}
           </div>

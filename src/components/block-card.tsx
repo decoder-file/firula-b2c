@@ -20,7 +20,7 @@ type BlockCardProps = {
 export function BlockCard({ block, company, onClick }: BlockCardProps) {
   return (
     <div className="mb-4 flex w-full rounded-2xl bg-white shadow-md">
-      <div className=" flex w-full max-w-48 items-center justify-center rounded-s-2xl ">
+      <div className="flex w-full max-w-40 items-center justify-center rounded-s-2xl">
         {block?.imageUrl ? (
           <img
             src={`https://pub-ed847887b3d7415384bbf5488c674561.r2.dev/${block?.imageUrl}`}
@@ -38,12 +38,22 @@ export function BlockCard({ block, company, onClick }: BlockCardProps) {
       </div>
       <div className="flex w-full flex-col justify-center p-3">
         <div className="flex gap-1">
-          {block.sports.length > 0 &&
-            block.sports.map((sport) => (
-              <Badge key={sport} variant="default">
-                {translateSportToPortuguese(sport.toLocaleUpperCase() as Sport)}
-              </Badge>
-            ))}
+          {block.sports.length > 0 && (
+            <>
+              {block.sports.slice(0, 1).map((sport) => (
+                <Badge key={sport} variant="default">
+                  {translateSportToPortuguese(
+                    sport.toLocaleUpperCase() as Sport,
+                  )}
+                </Badge>
+              ))}
+              {block.sports.length > 1 && (
+                <Badge key="more" variant="default">
+                  +{block.sports.length - 1}
+                </Badge>
+              )}
+            </>
+          )}
         </div>
         <p className="text-base ">{formatStringCapitalized(company?.name)}</p>
         <p className="mb-1 text-xl font-normal ">
