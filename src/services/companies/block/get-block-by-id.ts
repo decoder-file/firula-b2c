@@ -26,8 +26,6 @@ export const getBlockById = async ({
 
     const response: GetBlockByIdResponseType = await api.get(url)
 
-    console.log('response', response)
-
     return {
       block: response.data.block,
       success: true,

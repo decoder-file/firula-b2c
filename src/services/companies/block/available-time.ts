@@ -5,6 +5,7 @@ import api from '../../api'
 export type AvailableTimeType = {
   hour: string
   status: string
+  price: string
 }
 
 export type GetAvailableTimeRequestType = {

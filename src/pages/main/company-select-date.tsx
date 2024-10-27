@@ -37,7 +37,6 @@ export function CompanySelectDate() {
   const [loading, setLoading] = useState(true)
   const [dateAvailable, setDateAvailable] = useState<AvailableTimeType[]>()
   const [availableCourt, setAvailableCourt] = useState<boolean>(false)
-  const [valueForHour, setValueForHour] = useState<string>('')
   const [activeDayUse, setActiveDayUse] = useState<boolean>(false)
   const [valueForHourDayUse, setValueForHourDayUse] = useState<string>('')
   const [durationSelection, setDurationSelection] = useState<string>('1')
@@ -59,7 +58,6 @@ export function CompanySelectDate() {
 
         return
       }
-      setValueForHour(response.valueForHour ?? '')
       setAvailableCourt(true)
       setDateAvailable(response.courtTimes)
       setActiveDayUse(response.dayUseActive ?? false)
@@ -216,7 +214,7 @@ export function CompanySelectDate() {
                               </p>
                               <Separator className="my-2 hidden md:block" />
                               <p className="text-sm font-light text-white">
-                                R$ {formatCurrency(valueForHour)}
+                                R$ {formatCurrency(e.price)}
                               </p>
                             </Button>
                           ))}

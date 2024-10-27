@@ -7,8 +7,6 @@ type PaymentSummaryProps = {
 }
 
 export function PaymentSummary({ price, duration }: PaymentSummaryProps) {
-  console.log('price', price)
-
   let rate = 0
 
   if (price) {
@@ -37,7 +35,12 @@ export function PaymentSummary({ price, duration }: PaymentSummaryProps) {
         <p className="text-sm font-semibold">
           R${' '}
           {price
-            ? formatCurrency((Number(duration) * Number(price)).toString())
+            ? formatCurrency(
+                (
+                  Number(duration) * Number(price) +
+                  Number(rate.toString())
+                ).toString(),
+              )
             : '0,00'}
         </p>
       </div>

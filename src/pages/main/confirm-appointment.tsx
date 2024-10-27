@@ -59,15 +59,34 @@ export function ConfirmAppointment() {
     if (response.success) {
       setBlockInfo(response.block)
 
-      const openingHours = response.block?.openingHours.find(
-        (hour) =>
+      const openingHours = response.block?.openingHours.find((hour) => {
+        // Verifica o dia da semana
+        const isSameDay =
           hour.dayOfWeek ===
           daysOfWeekMock[
             moment(scheduling.date).format(
               'dddd',
             ) as keyof typeof daysOfWeekMock
-          ],
-      )
+          ]
+
+        if (!scheduling.isDayUse) {
+          // Converte os horários para momentos comparáveis
+          const startTime = moment(hour.startTime, 'HH:mm')
+          const endTime = moment(hour.endTime, 'HH:mm')
+          const userMomentTime = moment(scheduling.hour, 'HH:mm')
+
+          // Verifica se o horário do usuário está dentro do intervalo
+          const isWithinTimeRange =
+            userMomentTime.isSameOrAfter(startTime) &&
+            userMomentTime.isSameOrBefore(endTime)
+
+          return isSameDay && isWithinTimeRange
+        }
+
+        return isSameDay
+      })
+
+      console.log('openingHours', openingHours)
 
       setOpeningHours(openingHours)
     }
@@ -83,7 +102,7 @@ export function ConfirmAppointment() {
           price={
             scheduling.isDayUse
               ? openingHours?.valueForHourDayUse
-              : blockInfo?.valueForHour
+              : openingHours?.priceForHour
           }
         />
       )
@@ -179,9 +198,9 @@ export function ConfirmAppointment() {
                     Como deseja pagar a quadra
                   </p>
 
-                  {paymentMethod.map((method) => {
+                  {paymentMethod.map((method, index) => {
                     return (
-                      <>
+                      <div key={index}>
                         <div className="flex w-full flex-col">
                           <button
                             className={`mb-2 rounded-xl pl-2 pr-2  ${paymentMethodSelected === method.type ? 'bg-primary' : 'bg-white'}  w-full border-2 ${paymentMethodSelected === method.type && 'border-primary'}`}
@@ -199,7 +218,7 @@ export function ConfirmAppointment() {
                             </div>
                           </button>
                         </div>
-                      </>
+                      </div>
                     )
                   })}
 

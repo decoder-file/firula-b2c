@@ -8,6 +8,7 @@ export type OpeningHoursType = {
   active: boolean
   valueForHourDayUse: string
   dayUseActive: boolean
+  priceForHour: string
 }
 
 export type BlockType = {
