@@ -42,6 +42,8 @@ export function CompanySelectDate() {
   const [durationSelection, setDurationSelection] = useState<string>('1')
 
   const fetchAvailableTime = async () => {
+    setLoading(true)
+
     const dateString = moment(date, 'ddd MMM DD YYYY HH:mm:ss ZZ').format(
       'DD/MM/YYYY',
     )
@@ -148,80 +150,83 @@ export function CompanySelectDate() {
               </div>
             </div>
           </div>
-          {!loading ? (
-            <div className="mt-6 h-full sm:flex">
-              <div className="flex flex-col items-center rounded-2xl bg-zinc-200 p-3 sm:max-w-80">
-                <Calendar
-                  mode="single"
-                  selected={date}
-                  onSelect={setDate}
-                  className="rounded-md border"
-                  footer={footerCalendar()}
-                  disabled={(date) =>
-                    date < moment().subtract(1, 'day').toDate()
-                  }
-                  initialFocus
-                  lang="pt"
-                />
-              </div>
-              <div className="flex w-full flex-col justify-between  sm:ml-4">
-                <div>
-                  <Separator className="my-2" />
+          <div className="mt-6 h-full sm:flex">
+            <div className="flex flex-col items-center rounded-2xl bg-zinc-200 p-3 sm:max-w-80">
+              <Calendar
+                mode="single"
+                selected={date}
+                onSelect={setDate}
+                className="rounded-md border"
+                footer={footerCalendar()}
+                disabled={(date) => date < moment().subtract(1, 'day').toDate()}
+                initialFocus
+                lang="pt"
+              />
+            </div>
+            <div className="flex w-full flex-col justify-between  sm:ml-4">
+              <div>
+                <Separator className="my-2" />
 
-                  <h1 className="mb-2 text-xl font-semibold text-black">
-                    {formatStringCapitalized(
-                      moment(date).format('dddd, DD/MMM'),
-                    )}
-                  </h1>
+                <h1 className="mb-2 text-xl font-semibold text-black">
+                  {formatStringCapitalized(moment(date).format('dddd, DD/MMM'))}
+                </h1>
 
-                  {availableCourt ? (
-                    <>
-                      {activeDayUse ? (
-                        <div className="grid h-full max-w-full items-center justify-center gap-2 text-center">
-                          <div className="w-full">
-                            <p className="mb-3 w-full">
-                              Essa quadra está disponível para DayUse no dia{' '}
-                              {formatStringCapitalized(
-                                moment(date).format('DD/MM'),
-                              )}
+                {loading && (
+                  <div className="grid h-full max-w-full items-center justify-center gap-2 text-center">
+                    <div className="w-full">
+                      <p>Carregando horários...</p>
+                    </div>
+                  </div>
+                )}
+                {!loading && availableCourt ? (
+                  <>
+                    {activeDayUse ? (
+                      <div className="grid h-full max-w-full items-center justify-center gap-2 text-center">
+                        <div className="w-full">
+                          <p className="mb-3 w-full">
+                            Essa quadra está disponível para DayUse no dia{' '}
+                            {formatStringCapitalized(
+                              moment(date).format('DD/MM'),
+                            )}
+                          </p>
+
+                          <p>R$ {formatCurrency(valueForHourDayUse)}</p>
+                          <Button
+                            type="submit"
+                            className="w-full"
+                            onClick={handleSelectDayUse}
+                          >
+                            Reservar DayUse
+                          </Button>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="mb-2 w-full max-w-full items-center justify-center gap-2 sm:grid sm:grid-cols-5">
+                        {dateAvailable?.map((e) => (
+                          <Button
+                            key={e.hour}
+                            className={`mb-2 items-center justify-center rounded-2xl p-4 max-sm:w-full max-sm:justify-between sm:flex sm:h-20 sm:flex-col ${
+                              e.status === 'busy'
+                                ? 'bg-gray-400 text-gray-500'
+                                : 'bg-primary text-white'
+                            }`}
+                            onClick={() => handleSelectHour(e.hour)}
+                            disabled={e.status !== 'available'}
+                          >
+                            <p className="text-sm font-semibold text-white">
+                              {e.hour}
                             </p>
-
-                            <p>R$ {formatCurrency(valueForHourDayUse)}</p>
-                            <Button
-                              type="submit"
-                              className="w-full"
-                              onClick={handleSelectDayUse}
-                            >
-                              Reservar DayUse
-                            </Button>
-                          </div>
-                        </div>
-                      ) : (
-                        <div className="mb-2 w-full max-w-full items-center justify-center gap-2 sm:grid sm:grid-cols-5">
-                          {dateAvailable?.map((e) => (
-                            <Button
-                              key={e.hour}
-                              className={`mb-2 items-center justify-center rounded-2xl p-4 max-sm:w-full max-sm:justify-between sm:flex sm:h-20 sm:flex-col ${
-                                e.status === 'busy'
-                                  ? 'bg-gray-400 text-gray-500'
-                                  : 'bg-primary text-white'
-                              }`}
-                              onClick={() => handleSelectHour(e.hour)}
-                              disabled={e.status !== 'available'}
-                            >
-                              <p className="text-sm font-semibold text-white">
-                                {e.hour}
-                              </p>
-                              <Separator className="my-2 hidden md:block" />
-                              <p className="text-sm font-light text-white">
-                                R$ {formatCurrency(e.price)}
-                              </p>
-                            </Button>
-                          ))}
-                        </div>
-                      )}
-                    </>
-                  ) : (
+                            <Separator className="my-2 hidden md:block" />
+                            <p className="text-sm font-light text-white">
+                              R$ {formatCurrency(e.price)}
+                            </p>
+                          </Button>
+                        ))}
+                      </div>
+                    )}
+                  </>
+                ) : (
+                  !loading && (
                     <div className="grid h-full max-w-full items-center justify-center gap-2 text-center">
                       <div className="w-full">
                         <p className="w-full">
@@ -232,13 +237,11 @@ export function CompanySelectDate() {
                         </p>
                       </div>
                     </div>
-                  )}
-                </div>
+                  )
+                )}
               </div>
             </div>
-          ) : (
-            <p>Carregando...</p>
-          )}
+          </div>
         </div>
       </div>
 
