@@ -86,8 +86,6 @@ export function ConfirmAppointment() {
         return isSameDay
       })
 
-      console.log('openingHours', openingHours)
-
       setOpeningHours(openingHours)
     }
     setLoadingBlockInfo(false)

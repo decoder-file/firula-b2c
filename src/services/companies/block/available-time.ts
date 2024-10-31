@@ -6,6 +6,7 @@ export type AvailableTimeType = {
   hour: string
   status: string
   price: string
+  isDayUse?: boolean
 }
 
 export type GetAvailableTimeRequestType = {
