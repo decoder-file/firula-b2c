@@ -129,7 +129,7 @@ export function SignIn() {
               <div className="text-right">
                 <a
                   className="cursor-pointer text-xs font-normal text-primary"
-                  onClick={() => navigate('/forgot-password')}
+                  onClick={() => navigate('/alterar-senha/enviar-token')}
                 >
                   Esqueceu senha sua senha?
                 </a>

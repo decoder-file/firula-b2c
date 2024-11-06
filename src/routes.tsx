@@ -11,6 +11,8 @@ import { SignIn } from './pages/auth/sign-in'
 import { SignUp } from './pages/auth/sign-up'
 import { MyAppointments } from './pages/main/my-appointments'
 import { SuccessAppointment } from './pages/main/success-appointments'
+import { ResetPassword } from './pages/auth/reset-password/reset-password'
+import { SendTokenResetPassword } from './pages/auth/reset-password/send-token-reset-password'
 
 export const router = createBrowserRouter([
   {
@@ -23,6 +25,24 @@ export const router = createBrowserRouter([
       {
         path: '/sign-in',
         element: <SignIn />,
+      },
+    ],
+  },
+  {
+    element: <AuthLayout />,
+    children: [
+      {
+        path: '/alterar-senha/enviar-token',
+        element: <SendTokenResetPassword />,
+      },
+    ],
+  },
+  {
+    element: <AuthLayout />,
+    children: [
+      {
+        path: '/alterar-senha/:userId',
+        element: <ResetPassword />,
       },
     ],
   },
