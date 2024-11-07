@@ -18,6 +18,7 @@ import { createScheduling } from '../../services/scheduling'
 import { useSchedulingStore } from '../../store/SchedulingStore'
 import { useUserStore } from '../../store/UserStore'
 import moment from 'moment'
+import { createDayUseCheckIn } from '../../services/scheduling/create-day-use-check-in'
 
 type PixFormProps = {
   price: string | undefined
@@ -53,6 +54,25 @@ export function PixForm({
     }
 
     try {
+      if (scheduling.isDayUse) {
+        const response = await createDayUseCheckIn({
+          date: scheduling.date,
+          companyBlockId: blockId ?? '',
+          userId: user.userId,
+        })
+
+        if (response.success) {
+          setScheduling({
+            date: '',
+            hour: '',
+            isDayUse: true,
+            pixQrCode: response.pixQrCode ?? '',
+            duration: scheduling.duration,
+          })
+          navigate('/agendamento-realizado')
+          return
+        }
+      }
       const response = await createScheduling({
         date: scheduling.date,
         companyBlockId: blockId ?? '',

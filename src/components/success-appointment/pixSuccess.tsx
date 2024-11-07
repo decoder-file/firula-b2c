@@ -23,9 +23,16 @@ export function PixSuccess() {
         <h1 className="mb-2 mt-6 text-center text-3xl font-semibold text-black">
           Quase lá! Pague via Pix para concluir sua reserva
         </h1>
-        <h3 className="mb-6 text-center text-base font-light text-black opacity-60">
-          Para confirmar sua reserva, realizar o pagamento via Pix
-        </h3>
+        {scheduling.isDayUse ? (
+          <h3 className="mb-6 text-center text-base font-light text-black opacity-60">
+            Para confirmar seu day use, é necessário realizar o pagamento via
+            Pix
+          </h3>
+        ) : (
+          <h3 className="mb-6 text-center text-base font-light text-black opacity-60">
+            Para confirmar sua reserva, realizar o pagamento via Pix
+          </h3>
+        )}
       </div>
 
       <div className="mt-6 flex h-full w-full  justify-center">
