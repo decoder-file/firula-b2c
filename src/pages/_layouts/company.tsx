@@ -135,6 +135,9 @@ export function CompanyLayout({ title }: CompanyLayoutProps) {
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end">
+                    <DropdownMenuItem onClick={() => navigate('/day-uses')}>
+                      Meus Days uses
+                    </DropdownMenuItem>
                     <DropdownMenuItem
                       onClick={() => navigate('/meus-agendamentos')}
                     >

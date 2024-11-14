@@ -13,6 +13,7 @@ import { MyAppointments } from './pages/main/my-appointments'
 import { SuccessAppointment } from './pages/main/success-appointments'
 import { ResetPassword } from './pages/auth/reset-password/reset-password'
 import { SendTokenResetPassword } from './pages/auth/reset-password/send-token-reset-password'
+import { ListDayUse } from './pages/main/list-day-use'
 
 export const router = createBrowserRouter([
   {
@@ -97,6 +98,15 @@ export const router = createBrowserRouter([
       {
         path: '/meus-agendamentos',
         element: <MyAppointments />,
+      },
+    ],
+  },
+  {
+    element: <CompanyLayout title="Meus Day Uses" />,
+    children: [
+      {
+        path: '/day-uses',
+        element: <ListDayUse />,
       },
     ],
   },
