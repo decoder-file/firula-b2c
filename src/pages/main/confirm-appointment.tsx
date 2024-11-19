@@ -109,7 +109,11 @@ export function ConfirmAppointment() {
     if (paymentMethodSelected === 'credit-card') {
       return (
         <CreditCardForm
-          price={blockInfo?.valueForHour}
+          price={
+            scheduling.isDayUse
+              ? openingHours?.valueForHourDayUse
+              : openingHours?.priceForHour
+          }
           paymentMethodSelected={paymentMethodSelected}
           setLoadingPayment={setLoadingPayment}
         />

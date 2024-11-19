@@ -7,14 +7,16 @@ export function PixSuccess() {
   const { scheduling } = useSchedulingStore()
 
   const copyToClipboard = () => {
-    navigator.clipboard.writeText(scheduling.pixQrCode).then(
-      () => {
-        toast.success('Texto copiado para a área de transferência!')
-      },
-      () => {
-        toast.error('Erro ao copiar texto!')
-      },
-    )
+    navigator.clipboard
+      .writeText(scheduling.pixQrCode ? scheduling.pixQrCode : '')
+      .then(
+        () => {
+          toast.success('Texto copiado para a área de transferência!')
+        },
+        () => {
+          toast.error('Erro ao copiar texto!')
+        },
+      )
   }
 
   return (
@@ -51,7 +53,7 @@ export function PixSuccess() {
               </p>
             </div>
           </div>
-          <QRCodeSVG value={scheduling.pixQrCode} />
+          <QRCodeSVG value={scheduling.pixQrCode ? scheduling.pixQrCode : ''} />
 
           <h3 className="mt-3 text-sm font-semibold">
             Ou pague com Pix Copia e Cola

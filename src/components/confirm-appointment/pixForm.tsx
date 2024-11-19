@@ -68,6 +68,7 @@ export function PixForm({
             isDayUse: true,
             pixQrCode: response.pixQrCode ?? '',
             duration: scheduling.duration,
+            paymentMethod: 'pix',
           })
           navigate('/agendamento-realizado')
           return
@@ -79,6 +80,7 @@ export function PixForm({
         startTime: scheduling.hour,
         endTime: hourFish.format('HH:mm'),
         userId: user.userId,
+        paymentMethod: 'pix',
       })
 
       if (response.success) {
@@ -88,6 +90,7 @@ export function PixForm({
           isDayUse: scheduling.isDayUse,
           pixQrCode: response.pixQrCode ?? '',
           duration: scheduling.duration,
+          paymentMethod: 'pix',
         })
         navigate('/agendamento-realizado')
       }

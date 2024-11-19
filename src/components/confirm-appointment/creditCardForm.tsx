@@ -20,6 +20,11 @@ import { toast } from 'sonner'
 import InputMask from 'react-input-mask'
 import { cn } from '../../lib/utils'
 import { useSchedulingStore } from '../../store/SchedulingStore'
+import { useUserStore } from '../../store/UserStore'
+import { useNavigate, useParams } from 'react-router-dom'
+import { createScheduling } from '../../services/scheduling'
+import { createDayUseCheckIn } from '../../services/scheduling/create-day-use-check-in'
+import moment from 'moment'
 
 const signInForm = z.object({
   number: z.string().min(16, 'Número do cartão inválido'),
@@ -40,11 +45,17 @@ export function CreditCardForm({
   paymentMethodSelected,
   setLoadingPayment,
 }: CreditCardFormProps) {
-  const { scheduling } = useSchedulingStore()
+  const { scheduling, setScheduling } = useSchedulingStore()
+  const { user } = useUserStore()
+
+  const { blockId } = useParams()
+  const navigate = useNavigate()
 
   const [acceptTerm, setAcceptTerm] = useState(false)
   const [monthSelected, setMonthSelected] = useState('')
   const [yearSelected, setYearSelected] = useState('')
+
+  const hourFish = moment(scheduling.hour, 'HH:mm').add(1, 'hours')
 
   const {
     register,
@@ -55,7 +66,6 @@ export function CreditCardForm({
   })
 
   const handleCreditCard = async (data: SingInForm) => {
-    console.log(data)
     if (monthSelected === '') {
       toast.error('Selecione o mês de vencimento')
       return
@@ -67,6 +77,55 @@ export function CreditCardForm({
     }
 
     setLoadingPayment(true)
+
+    try {
+      if (scheduling.isDayUse) {
+        const response = await createDayUseCheckIn({
+          date: scheduling.date,
+          companyBlockId: blockId ?? '',
+          userId: user.userId,
+        })
+
+        if (response.success) {
+          setScheduling({
+            date: '',
+            hour: '',
+            isDayUse: true,
+            duration: scheduling.duration,
+            paymentMethod: 'creditCard',
+          })
+          navigate('/agendamento-realizado')
+          return
+        }
+      }
+      const response = await createScheduling({
+        date: scheduling.date,
+        companyBlockId: blockId ?? '',
+        startTime: scheduling.hour,
+        endTime: hourFish.format('HH:mm'),
+        userId: user.userId,
+        paymentMethod: 'creditCard',
+        creditCard: {
+          number: data.number.replace(/\s+/g, ''),
+          name: data.holder_name,
+          expirationDate: `${monthSelected}${yearSelected}`,
+          cvv: data.cvv,
+        },
+      })
+
+      if (response.success) {
+        setScheduling({
+          date: '',
+          hour: '',
+          isDayUse: scheduling.isDayUse,
+          duration: scheduling.duration,
+          paymentMethod: 'creditCard',
+        })
+        navigate('/agendamento-realizado')
+      }
+    } catch (error) {
+      setLoadingPayment(false)
+    }
 
     setLoadingPayment(false)
   }

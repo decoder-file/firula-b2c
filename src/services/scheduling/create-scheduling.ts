@@ -23,6 +23,13 @@ export type CreateSchedulingRequest = {
   startTime: string
   endTime: string
   userId: string
+  paymentMethod: 'creditCard' | 'pix'
+  creditCard?: {
+    number: string
+    name: string
+    expirationDate: string
+    cvv: string
+  }
 }
 
 export const createScheduling = async ({
@@ -31,6 +38,8 @@ export const createScheduling = async ({
   startTime,
   endTime,
   userId,
+  paymentMethod,
+  creditCard,
 }: CreateSchedulingRequest): Promise<CreateSchedulingResponseType> => {
   try {
     const formattedDate = moment(date, 'YYYY/MM/DD')
@@ -45,6 +54,8 @@ export const createScheduling = async ({
       userId,
       startTime,
       endTime,
+      paymentMethod,
+      creditCard,
     }
 
     const response: CreateSchedulingResponseApiType = await api.post(
