@@ -86,13 +86,14 @@ export function ConfirmAppointment() {
         return isSameDay
       })
 
+      console.log('###########')
       setOpeningHours(openingHours)
+      setLoadingBlockInfo(false)
     }
-    setLoadingBlockInfo(false)
   }
 
   const renderPaymentMethod = () => {
-    if (paymentMethodSelected === 'pix') {
+    if (paymentMethodSelected === 'pix' && openingHours?.active) {
       return (
         <PixForm
           paymentMethodSelected={paymentMethodSelected}
@@ -128,7 +129,7 @@ export function ConfirmAppointment() {
   return (
     <>
       <Helmet title="Agendamento" />
-      {loadingPayment || loadingBlockInfo ? (
+      {loadingPayment || loadingBlockInfo || !openingHours?.active ? (
         <ScreenLoading />
       ) : (
         <>

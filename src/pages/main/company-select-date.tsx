@@ -120,12 +120,12 @@ export function CompanySelectDate() {
     navigate(`/quadras/${slug}/${blockId}/confirmar-agendamento`)
   }
 
-  const handleSelectDayUse = () => {
+  const handleSelectDayUse = async () => {
     if (!localStorage.getItem('token')) {
       setOpenDialog(true)
       return
     }
-    setScheduling({
+    await setScheduling({
       ...scheduling,
       hour: '',
       date: moment(date).format('YYYY-MM-DD'),

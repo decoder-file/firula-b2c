@@ -116,7 +116,10 @@ export function PixForm({
           pagamento.
         </p>
 
-        <PaymentSummary price={price} duration={scheduling.duration} />
+        <PaymentSummary
+          price={price}
+          duration={!scheduling.isDayUse ? scheduling.duration : undefined}
+        />
 
         <div className="mb-5 mt-5 flex items-center space-x-2">
           <Checkbox id="terms2" onClick={() => setAcceptTerm(!acceptTerm)} />

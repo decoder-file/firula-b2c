@@ -2,7 +2,6 @@ import { Separator } from '../components/ui/separator'
 import { Button } from '../components/ui/button'
 import {
   formatStringCapitalized,
-  formatCurrency,
   translateSportToPortuguese,
   Sport,
 } from '../utils/functions'
@@ -73,11 +72,6 @@ export function BlockCard({ block, company, onClick }: BlockCardProps) {
         <Separator className="my-2 opacity-30" />
 
         <Button onClick={onClick}>Agendar Horário</Button>
-        <div className="mt-2 w-full text-center">
-          <p className="text-xs  opacity-40">
-            A partir de R$ {formatCurrency(block.valueForHour)}
-          </p>
-        </div>
       </div>
     </div>
   )
