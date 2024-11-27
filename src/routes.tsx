@@ -14,6 +14,7 @@ import { SuccessAppointment } from './pages/main/success-appointments'
 import { ResetPassword } from './pages/auth/reset-password/reset-password'
 import { SendTokenResetPassword } from './pages/auth/reset-password/send-token-reset-password'
 import { ListDayUse } from './pages/main/list-day-use'
+import EventPage from './pages/main/event/event-details'
 
 export const router = createBrowserRouter([
   {
@@ -116,6 +117,14 @@ export const router = createBrowserRouter([
       {
         path: '/agendamento-realizado',
         element: <SuccessAppointment />,
+      },
+    ],
+  },
+  {
+    children: [
+      {
+        path: '/evento/:id',
+        element: <EventPage />,
       },
     ],
   },
