@@ -123,7 +123,7 @@ export const router = createBrowserRouter([
   {
     children: [
       {
-        path: '/evento/:id',
+        path: '/evento/:slug',
         element: <EventPage />,
       },
     ],
