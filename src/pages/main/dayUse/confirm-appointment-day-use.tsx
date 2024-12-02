@@ -50,8 +50,7 @@ export function ConfirmDayUse() {
     setLoadingValueForDayUse(true)
     const response = await getValueForDayUse({
       blockId: blockId ?? '',
-      // date: moment().format('DD/MM/YYYY'),
-      date: moment('04/12/2024').format('YYYY-MM-DD'),
+      date: moment().format('DD/MM/YYYY'),
     })
 
     if (response.success && response.valueForDayUse) {
