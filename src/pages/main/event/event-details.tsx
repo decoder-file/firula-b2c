@@ -53,9 +53,13 @@ export default function EventPage() {
       <main className="flex-grow">
         <div className="relative h-[600px] w-full">
           <img
-            src={ImagemMock}
+            src={
+              eventDetails && eventDetails.imageUrl
+                ? `https://pub-ed847887b3d7415384bbf5488c674561.r2.dev/${eventDetails.imageUrl}`
+                : ImagemMock
+            }
             alt="Réveillon WA 2025"
-            className="h-full w-full object-cover"
+            className="background-cover h-full w-full"
           />
           <div className="absolute bottom-4 left-1/2 -translate-x-1/2 transform">
             <Button

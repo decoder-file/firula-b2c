@@ -1,30 +1,16 @@
-import { Button } from '../../components/ui/button'
-import { Separator } from '../../components/ui/separator'
+import { Button } from '../../../components/ui/button'
+import { Separator } from '../../../components/ui/separator'
 import { Helmet } from 'react-helmet-async'
 
 import { useState, useEffect } from 'react'
-import { useSchedulingStore } from '../../store/SchedulingStore'
 import moment from 'moment'
-import { formatStringCapitalized } from '../../utils/functions'
-import { ScreenLoading } from '../../components/screen-loading'
-import { CreditCardForm } from '../../components/confirm-appointment/creditCardForm'
-import { PixForm } from '../../components/confirm-appointment/pixForm'
+import { formatStringCapitalized } from '../../../utils/functions'
+import { ScreenLoading } from '../../../components/screen-loading'
+import { CreditCardForm } from '../../../components/confirm-appointment/creditCardForm'
+import { PixForm } from '../../../components/confirm-appointment/pixForm'
 import { useNavigate, useParams } from 'react-router-dom'
-import {
-  BlockType,
-  getBlockById,
-  OpeningHoursType,
-} from '../../services/companies/block'
-
-const daysOfWeekMock = {
-  domingo: 'sunday',
-  'segunda-feira': 'monday',
-  'terça-feira': 'tuesday',
-  'quarta-feira': 'wednesday',
-  'quinta-feira': 'thursday',
-  'sexta-feira': 'friday',
-  sábado: 'saturday',
-}
+import { BlockType, getBlockById } from '../../../services/companies/block'
+import { getValueForDayUse } from '../../../services/scheduling/dayUse/get-value-for-day-use'
 
 const paymentMethod = [
   {
@@ -39,19 +25,16 @@ const paymentMethod = [
   },
 ]
 
-export function ConfirmAppointment() {
+export function ConfirmDayUse() {
   const { blockId, slug } = useParams()
   const navigate = useNavigate()
-
-  const { scheduling } = useSchedulingStore()
 
   const [loadingPayment, setLoadingPayment] = useState(false)
   const [paymentMethodSelected, setPaymentMethodSelected] = useState('')
   const [blockInfo, setBlockInfo] = useState<BlockType>()
   const [loadingBlockInfo, setLoadingBlockInfo] = useState(true)
-  const [openingHours, setOpeningHours] = useState<OpeningHoursType>()
-
-  const hourFish = moment(scheduling.hour, 'HH:mm').add(1, 'hours')
+  const [loadingValueForDayUse, setLoadingValueForDayUse] = useState(true)
+  const [valueForDayUse, setValueForDayUse] = useState('')
 
   const fetchBlockById = async () => {
     setLoadingBlockInfo(true)
@@ -59,49 +42,33 @@ export function ConfirmAppointment() {
     if (response.success) {
       setBlockInfo(response.block)
 
-      const openingHours = response.block?.openingHours.find((hour) => {
-        // Verifica o dia da semana
-        const isSameDay =
-          hour.dayOfWeek ===
-          daysOfWeekMock[
-            moment(scheduling.date).format(
-              'dddd',
-            ) as keyof typeof daysOfWeekMock
-          ]
-
-        if (!scheduling.isDayUse) {
-          // Converte os horários para momentos comparáveis
-          const startTime = moment(hour.startTime, 'HH:mm')
-          const endTime = moment(hour.endTime, 'HH:mm')
-          const userMomentTime = moment(scheduling.hour, 'HH:mm')
-
-          // Verifica se o horário do usuário está dentro do intervalo
-          const isWithinTimeRange =
-            userMomentTime.isSameOrAfter(startTime) &&
-            userMomentTime.isSameOrBefore(endTime)
-
-          return isSameDay && isWithinTimeRange
-        }
-
-        return isSameDay
-      })
-
-      setOpeningHours(openingHours)
       setLoadingBlockInfo(false)
     }
   }
 
+  const fetchValueForDayUse = async () => {
+    setLoadingValueForDayUse(true)
+    const response = await getValueForDayUse({
+      blockId: blockId ?? '',
+      // date: moment().format('DD/MM/YYYY'),
+      date: moment('04/12/2024').format('YYYY-MM-DD'),
+    })
+
+    if (response.success && response.valueForDayUse) {
+      setValueForDayUse(response.valueForDayUse)
+      setLoadingValueForDayUse(false)
+      return
+    }
+    setLoadingValueForDayUse(false)
+  }
+
   const renderPaymentMethod = () => {
-    if (paymentMethodSelected === 'pix' && openingHours?.active) {
+    if (paymentMethodSelected === 'pix') {
       return (
         <PixForm
           paymentMethodSelected={paymentMethodSelected}
           setLoadingPayment={setLoadingPayment}
-          price={
-            scheduling.isDayUse
-              ? openingHours?.valueForHourDayUse
-              : openingHours?.priceForHour
-          }
+          price={valueForDayUse}
         />
       )
     }
@@ -109,11 +76,7 @@ export function ConfirmAppointment() {
     if (paymentMethodSelected === 'credit-card') {
       return (
         <CreditCardForm
-          price={
-            scheduling.isDayUse
-              ? openingHours?.valueForHourDayUse
-              : openingHours?.priceForHour
-          }
+          price={valueForDayUse}
           paymentMethodSelected={paymentMethodSelected}
           setLoadingPayment={setLoadingPayment}
         />
@@ -123,12 +86,13 @@ export function ConfirmAppointment() {
 
   useEffect(() => {
     fetchBlockById()
+    fetchValueForDayUse()
   }, [blockId])
 
   return (
     <>
       <Helmet title="Agendamento" />
-      {loadingPayment || loadingBlockInfo || !openingHours?.active ? (
+      {loadingPayment || loadingBlockInfo || loadingValueForDayUse ? (
         <ScreenLoading />
       ) : (
         <>
@@ -136,10 +100,10 @@ export function ConfirmAppointment() {
             <div className="mb-7 flex w-full max-w-5xl flex-col items-center">
               <div>
                 <h1 className="mb-2 mt-6 text-center text-3xl font-semibold text-black">
-                  Confirmação de agendamento
+                  Confirme seu Day Use
                 </h1>
                 <h3 className="mb-6 text-center text-base font-light text-black opacity-60">
-                  Confirme o agendamento da sua reserva
+                  Confirme a reserva do seu Day Use
                 </h3>
               </div>
 
@@ -149,20 +113,9 @@ export function ConfirmAppointment() {
 
                   <p className="mb-1 mt-1 text-lg font-medium">
                     {formatStringCapitalized(
-                      moment.utc(scheduling.date).format('dddd, DD/MMM'),
+                      moment.utc().format('dddd, DD/MMM'),
                     )}
                   </p>
-
-                  {!scheduling.isDayUse && (
-                    <>
-                      <p className="text-sm opacity-75">
-                        {scheduling.hour} - {hourFish.format('HH:mm')} |{' '}
-                        {blockInfo?.name}
-                      </p>
-
-                      <Separator className="mb-2 mt-2 opacity-50" />
-                    </>
-                  )}
 
                   <p className="text-sm">
                     {formatStringCapitalized(blockInfo?.Company?.name ?? '')}
@@ -173,15 +126,6 @@ export function ConfirmAppointment() {
                     )}
                     , {blockInfo?.Company?.companyAddress[0].number},{' '}
                     {blockInfo?.Company?.companyAddress[0].neighborhood}
-                  </p>
-                  <p className="text-xs opacity-50">
-                    Funcionamento às{' '}
-                    {
-                      moment(scheduling.date).format(
-                        'dddd',
-                      ) as keyof typeof daysOfWeekMock
-                    }
-                    : {openingHours?.startTime} - {openingHours?.endTime}
                   </p>
 
                   <Button
@@ -228,7 +172,15 @@ export function ConfirmAppointment() {
                     )
                   })}
 
-                  {renderPaymentMethod()}
+                  {!valueForDayUse ? (
+                    <div className="mt-6">
+                      <h4 className="text-xl font-semibold">
+                        Essa quadra não possui Day Use Hoje
+                      </h4>
+                    </div>
+                  ) : (
+                    renderPaymentMethod()
+                  )}
                 </div>
               </div>
             </div>

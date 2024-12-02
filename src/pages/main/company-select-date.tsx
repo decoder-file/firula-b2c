@@ -142,6 +142,7 @@ export function CompanySelectDate() {
   }
 
   useEffect(() => {
+    console.log('date', date)
     fetchAvailableTime()
   }, [date, durationSelection])
 

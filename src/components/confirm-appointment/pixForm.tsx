@@ -85,7 +85,7 @@ export function PixForm({
 
       if (response.success) {
         setScheduling({
-          date: '',
+          date: scheduling.date,
           hour: '',
           isDayUse: scheduling.isDayUse,
           pixQrCode: response.pixQrCode ?? '',

@@ -15,6 +15,7 @@ import { ResetPassword } from './pages/auth/reset-password/reset-password'
 import { SendTokenResetPassword } from './pages/auth/reset-password/send-token-reset-password'
 import { ListDayUse } from './pages/main/list-day-use'
 import EventPage from './pages/main/event/event-details'
+import { ConfirmDayUse } from './pages/main/dayUse/confirm-appointment-day-use'
 
 export const router = createBrowserRouter([
   {
@@ -90,6 +91,15 @@ export const router = createBrowserRouter([
       {
         path: '/quadras/:slug/:blockId/confirmar-agendamento',
         element: <ConfirmAppointment />,
+      },
+    ],
+  },
+  {
+    element: <CompanyLayout />,
+    children: [
+      {
+        path: '/quadras/:slug/:blockId/confirmar-day-use',
+        element: <ConfirmDayUse />,
       },
     ],
   },
