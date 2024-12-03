@@ -1,16 +1,20 @@
 import { Share } from 'lucide-react'
+import { toast } from 'sonner'
+import { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
+
 import { Button } from '../../../components/ui/button'
 import Header from './components/Header'
 import EventDetails from './components/EventDetails'
 import TicketSelection from './components/TicketSelection'
 import Footer from './components/Footer'
-import { toast } from 'sonner'
-
 import ImagemMock from '../../../assets/mock/imagem-background.png'
-import { EventType, getEventBySlug } from '../../../services/event'
-import { useEffect, useState } from 'react'
+import {
+  countsPageEvent,
+  EventType,
+  getEventBySlug,
+} from '../../../services/event'
 import { ScreenLoading } from '../../../components/screen-loading'
-import { useParams } from 'react-router-dom'
 
 export default function EventPage() {
   const { slug } = useParams()
@@ -25,6 +29,8 @@ export default function EventPage() {
     if (response.success && response.event) {
       setEventDetails(response.event)
     }
+
+    await countsPageEvent({ slug: slug || '' })
     setLoadingEventDetails(false)
   }
 
