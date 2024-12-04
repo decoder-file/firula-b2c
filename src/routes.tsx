@@ -18,6 +18,7 @@ import EventPage from './pages/main/event/event-details'
 import { ConfirmDayUse } from './pages/main/dayUse/confirm-appointment-day-use'
 import EventCheckoutPage from './pages/main/event/event-checkout'
 import EventPixConfirmPage from './pages/main/event/event-pix-confirm'
+import EventPaymentConfirmed from './pages/main/event/event-payment-confirmed'
 
 export const router = createBrowserRouter([
   {
@@ -153,6 +154,14 @@ export const router = createBrowserRouter([
       {
         path: '/evento/checkout/pix',
         element: <EventPixConfirmPage />,
+      },
+    ],
+  },
+  {
+    children: [
+      {
+        path: '/evento/payment-confirmed',
+        element: <EventPaymentConfirmed />,
       },
     ],
   },
