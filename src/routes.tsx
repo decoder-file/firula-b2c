@@ -16,6 +16,7 @@ import { SendTokenResetPassword } from './pages/auth/reset-password/send-token-r
 import { ListDayUse } from './pages/main/list-day-use'
 import EventPage from './pages/main/event/event-details'
 import { ConfirmDayUse } from './pages/main/dayUse/confirm-appointment-day-use'
+import EventCheckoutPage from './pages/main/event/event-checkout'
 
 export const router = createBrowserRouter([
   {
@@ -135,6 +136,14 @@ export const router = createBrowserRouter([
       {
         path: '/evento/:slug',
         element: <EventPage />,
+      },
+    ],
+  },
+  {
+    children: [
+      {
+        path: '/evento/checkout',
+        element: <EventCheckoutPage />,
       },
     ],
   },
