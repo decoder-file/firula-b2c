@@ -5,15 +5,41 @@ import { Checkbox } from '../../../../components/ui/checkbox'
 import { Button } from '../../../../components/ui/button'
 
 import { Card, CardContent } from '../../../../components/ui/card'
+import { generateTicket } from '../../../../services/event/generate-ticket'
+import { useNavigate } from 'react-router-dom'
 
 type EventCheckoutPixFormProps = {
   price: string
+  eventId: string
+  ticketTypeId: string
+  userId: string
 }
 
-export function EventCheckoutPixForm({ price }: EventCheckoutPixFormProps) {
-  const [acceptTerm, setAcceptTerm] = useState(false)
+export function EventCheckoutPixForm({
+  price,
+  eventId,
+  ticketTypeId,
+  userId,
+}: EventCheckoutPixFormProps) {
+  const navigate = useNavigate()
 
-  const handleConfirmPayment = async () => {}
+  const [acceptTerm, setAcceptTerm] = useState(false)
+  const [loadingPayment, setLoadingPayment] = useState(false)
+
+  const handleConfirmPayment = async () => {
+    setLoadingPayment(true)
+    const response = await generateTicket({
+      userId,
+      eventId,
+      ticketTypeId,
+      paymentMethod: 'pix',
+    })
+
+    if (response.success) {
+      navigate(`/evento/checkout/pix/${response.ticketId}`)
+    }
+    setLoadingPayment(false)
+  }
 
   return (
     <>
@@ -90,8 +116,9 @@ export function EventCheckoutPixForm({ price }: EventCheckoutPixFormProps) {
             </div>
 
             <Button
-              disabled={!acceptTerm}
+              disabled={!acceptTerm || loadingPayment}
               className="w-full"
+              loading={loadingPayment}
               onClick={() => handleConfirmPayment()}
             >
               Pagar agora

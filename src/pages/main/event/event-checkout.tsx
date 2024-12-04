@@ -25,10 +25,13 @@ import ImagemMock from '../../../assets/mock/imagem-background.png'
 import { ScreenLoading } from '../../../components/screen-loading'
 import moment from 'moment'
 import { formatCurrency } from '../../../utils/functions'
+import { useUserStore } from '../../../store/UserStore'
 
 export default function EventCheckoutPage() {
   const navigate = useNavigate()
   const { slug, eventId, ticketTypeId } = useParams()
+
+  const { user } = useUserStore()
 
   const [paymentMethod, setPaymentMethod] = useState('pix')
   const [eventDetails, setEventDetails] = useState<EventType>()
@@ -151,6 +154,9 @@ export default function EventCheckoutPage() {
               {paymentMethod === 'pix' && (
                 <EventCheckoutPixForm
                   price={formatCurrency(ticketTypeDetails?.price || '')}
+                  eventId={eventId || ''}
+                  ticketTypeId={ticketTypeId || ''}
+                  userId={user.userId}
                 />
               )}
             </div>

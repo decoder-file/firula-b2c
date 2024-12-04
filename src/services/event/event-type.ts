@@ -39,3 +39,16 @@ export type EventType = {
   companyId: string
   ticketTypes?: ticketTypes[]
 }
+
+export type Ticket = {
+  id: string
+  keyPix: string
+  purchaseDate: string
+  paymentDate: string | null
+  status: string
+  userId: string
+  createdAt: string
+  updatedAt: string
+  eventId: string
+  ticketTypeId: string
+}

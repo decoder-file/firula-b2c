@@ -152,7 +152,7 @@ export const router = createBrowserRouter([
   {
     children: [
       {
-        path: '/evento/checkout/pix',
+        path: '/evento/checkout/pix/:ticketId',
         element: <EventPixConfirmPage />,
       },
     ],
