@@ -6,7 +6,11 @@ import { Button } from '../../../../components/ui/button'
 
 import { Card, CardContent } from '../../../../components/ui/card'
 
-export function EventCheckoutPixForm() {
+type EventCheckoutPixFormProps = {
+  price: string
+}
+
+export function EventCheckoutPixForm({ price }: EventCheckoutPixFormProps) {
   const [acceptTerm, setAcceptTerm] = useState(false)
 
   const handleConfirmPayment = async () => {}
@@ -61,10 +65,10 @@ export function EventCheckoutPixForm() {
             <div className="space-y-4">
               <div className="space-y-2 rounded-lg bg-muted p-4">
                 <div className="flex items-center justify-between">
-                  <span className="text-xl font-semibold">R$ 994,50</span>
+                  <span className="text-xl font-semibold">R$ {price}</span>
                 </div>
                 <div className="flex items-center justify-between text-sm text-muted-foreground">
-                  <span>Total: R$ 994,50</span>
+                  <span>Total: R$ {price}</span>
                   {/* <span>(R$ 19,50 de taxa de processamento)</span> */}
                 </div>
               </div>

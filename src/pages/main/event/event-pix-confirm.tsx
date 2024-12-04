@@ -43,8 +43,8 @@ export default function EventPixConfirmPage() {
       <div className="mx-auto max-w-4xl space-y-6 p-4">
         <div className="flex flex-col items-start justify-between gap-4 md:flex-row md:items-center">
           <div>
-            <h1 className="text-3xl font-bold">Pedido iniciado</h1>
-            <p className="text-muted-foreground">
+            <h1 className="text-3xl font-bold text-primary">Pedido iniciado</h1>
+            <p className="text-muted-foreground ">
               Nº DO PEDIDO <span className="font-mono">{orderNumber}</span>
             </p>
           </div>
@@ -128,7 +128,7 @@ export default function EventPixConfirmPage() {
 
                 <div className="text-sm">
                   Este código expira em{' '}
-                  <span className="font-medium text-orange-500">
+                  <span className="font-medium text-primary">
                     {formatTime(timeLeft)}
                   </span>{' '}
                   minutos e não será mais válido.

@@ -12,7 +12,9 @@ export default function EventPaymentConfirmed() {
         <div className="mx-auto max-w-3xl space-y-6">
           {/* Header */}
           <div className="flex items-center justify-between">
-            <h1 className="text-3xl font-bold">Pedido efetuado com sucesso!</h1>
+            <h1 className="text-3xl font-bold text-primary">
+              Pedido efetuado com sucesso!
+            </h1>
             <div className="flex items-center gap-2 text-green-600">
               <CheckCircle2 className="h-6 w-6" />
               <span className="font-medium">Confirmado</span>
@@ -31,7 +33,6 @@ export default function EventPaymentConfirmed() {
               <div className="flex items-center gap-2">
                 <CreditCard className="h-5 w-5" />
                 <span>Cartão de crédito</span>
-                <span className="text-sm text-gray-500">CLICK TO PAY</span>
               </div>
             </div>
           </div>
