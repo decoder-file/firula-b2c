@@ -17,6 +17,7 @@ import { ListDayUse } from './pages/main/list-day-use'
 import EventPage from './pages/main/event/event-details'
 import { ConfirmDayUse } from './pages/main/dayUse/confirm-appointment-day-use'
 import EventCheckoutPage from './pages/main/event/event-checkout'
+import EventPixConfirmPage from './pages/main/event/event-pix-confirm'
 
 export const router = createBrowserRouter([
   {
@@ -144,6 +145,14 @@ export const router = createBrowserRouter([
       {
         path: '/evento/checkout',
         element: <EventCheckoutPage />,
+      },
+    ],
+  },
+  {
+    children: [
+      {
+        path: '/evento/checkout/pix',
+        element: <EventPixConfirmPage />,
       },
     ],
   },
