@@ -125,6 +125,15 @@ export const router = createBrowserRouter([
     ],
   },
   {
+    element: <CompanyLayout title="Ingressos" />,
+    children: [
+      {
+        path: '/day-uses',
+        element: <ListDayUse />,
+      },
+    ],
+  },
+  {
     element: <CompanyLayout title="Agendamento realizado" />,
     children: [
       {
@@ -160,7 +169,7 @@ export const router = createBrowserRouter([
   {
     children: [
       {
-        path: '/evento/payment-confirmed',
+        path: '/evento/payment-confirmed/:ticketId',
         element: <EventPaymentConfirmed />,
       },
     ],

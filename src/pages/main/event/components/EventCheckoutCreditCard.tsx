@@ -6,6 +6,7 @@ import { Select } from '@radix-ui/react-select'
 import { useState } from 'react'
 import { toast } from 'sonner'
 import InputMask from 'react-input-mask'
+import { useNavigate } from 'react-router-dom'
 
 import { cn } from '../../../../lib/utils'
 
@@ -22,6 +23,13 @@ import { Separator } from '../../../../components/ui/separator'
 import { Button } from '../../../../components/ui/button'
 import { Checkbox } from '../../../../components/ui/checkbox'
 import { Card, CardContent } from '../../../../components/ui/card'
+import { generateTicket } from '../../../../services/event/generate-ticket'
+
+type EventCheckoutCreditCardProps = {
+  eventId: string
+  ticketTypeId: string
+  userId: string
+}
 
 const signInForm = z.object({
   number: z.string().min(16, 'Número do cartão inválido'),
@@ -31,10 +39,17 @@ const signInForm = z.object({
 
 type SingInForm = z.infer<typeof signInForm>
 
-export function EventCheckoutCreditCard() {
+export function EventCheckoutCreditCard({
+  eventId,
+  ticketTypeId,
+  userId,
+}: EventCheckoutCreditCardProps) {
+  const navigate = useNavigate()
+
   const [acceptTerm, setAcceptTerm] = useState(false)
   const [monthSelected, setMonthSelected] = useState('')
   const [yearSelected, setYearSelected] = useState('')
+  const [loadingPayment, setLoadingPayment] = useState(false)
 
   const {
     register,
@@ -55,7 +70,28 @@ export function EventCheckoutCreditCard() {
       return
     }
 
-    console.log('#######data', data)
+    try {
+      const response = await generateTicket({
+        userId,
+        eventId,
+        ticketTypeId,
+        paymentMethod: 'creditCard',
+        creditCard: {
+          number: data.number.replace(/\s+/g, ''),
+          name: data.holder_name,
+          expirationDate: `${monthSelected}${yearSelected}`,
+          cvv: data.cvv,
+        },
+      })
+
+      if (response.success) {
+        navigate(`/evento/payment-confirmed/${response.ticketId}`)
+      }
+    } catch (error) {
+      setLoadingPayment(false)
+    }
+
+    setLoadingPayment(false)
   }
 
   return (
@@ -177,7 +213,10 @@ export function EventCheckoutCreditCard() {
             </div>
 
             <Button
-              disabled={!acceptTerm || isSubmitting || !isValid}
+              disabled={
+                !acceptTerm || isSubmitting || !isValid || loadingPayment
+              }
+              loading={loadingPayment}
               className="w-full"
               type="submit"
             >

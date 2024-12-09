@@ -150,7 +150,13 @@ export default function EventCheckoutPage() {
                 </CardContent>
               </Card>
 
-              {paymentMethod === 'credit' && <EventCheckoutCreditCard />}
+              {paymentMethod === 'credit' && (
+                <EventCheckoutCreditCard
+                  eventId={eventId || ''}
+                  ticketTypeId={ticketTypeId || ''}
+                  userId={user.userId}
+                />
+              )}
               {paymentMethod === 'pix' && (
                 <EventCheckoutPixForm
                   price={formatCurrency(ticketTypeDetails?.price || '')}

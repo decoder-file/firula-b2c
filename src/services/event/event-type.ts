@@ -51,4 +51,5 @@ export type Ticket = {
   updatedAt: string
   eventId: string
   ticketTypeId: string
+  event?: EventType
 }
