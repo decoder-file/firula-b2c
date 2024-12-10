@@ -135,18 +135,34 @@ export function CompanyLayout({ title }: CompanyLayoutProps) {
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end">
-                    <DropdownMenuItem onClick={() => navigate('/day-uses')}>
+                    <DropdownMenuItem
+                      className="cursor-pointer"
+                      onClick={() => navigate('/meus-ingressos')}
+                    >
+                      Meus Ingressos
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                      onClick={() => navigate('/day-uses')}
+                      className="cursor-pointer"
+                    >
                       Meus Days uses
                     </DropdownMenuItem>
                     <DropdownMenuItem
+                      className="cursor-pointer"
                       onClick={() => navigate('/meus-agendamentos')}
                     >
                       Meus Agendamentos
                     </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => navigate('/quadras')}>
+                    <DropdownMenuItem
+                      onClick={() => navigate('/quadras')}
+                      className="cursor-pointer"
+                    >
                       Novo Agendamento
                     </DropdownMenuItem>
-                    <DropdownMenuItem onClick={handleLogOut}>
+                    <DropdownMenuItem
+                      onClick={handleLogOut}
+                      className="cursor-pointer"
+                    >
                       Sair
                     </DropdownMenuItem>
                   </DropdownMenuContent>
