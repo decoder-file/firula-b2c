@@ -75,14 +75,14 @@ export function EventCard({
           </div>
 
           <div className="grid gap-1 pt-2">
-            <Button
+            {/* <Button
               variant="outline"
               size="sm"
               className="justify-start text-xs"
             >
               <Printer className="mr-1 h-3 w-3" />
               IMPRIMIR INGRESSO
-            </Button>
+            </Button> */}
             <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
               <DialogTrigger asChild>
                 <Button
