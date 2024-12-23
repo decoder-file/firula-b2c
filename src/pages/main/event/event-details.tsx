@@ -63,26 +63,46 @@ export default function EventPage() {
       <div className="flex min-h-screen flex-col">
         <Header />
         <main className="flex-grow">
-          <div className="relative h-[600px] w-full">
-            <img
-              src={
-                eventDetails && eventDetails.imageUrl
-                  ? `https://pub-ed847887b3d7415384bbf5488c674561.r2.dev/${eventDetails.imageUrl}`
-                  : ImagemMock
-              }
-              alt="Foto do evento"
-              className="background-cover h-full w-full"
-            />
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 transform">
-              <Button
-                className="bg-opacity-50 hover:bg-opacity-75"
-                onClick={copyUrlEvent}
-              >
-                <Share className="mr-2 h-4 w-4" />
-                COMPARTILHAR
-              </Button>
+          <div className="relative min-h-[300px] overflow-hidden">
+            <div className="absolute inset-0 z-0">
+              <img
+                src={
+                  eventDetails && eventDetails.imageUrl
+                    ? `https://pub-ed847887b3d7415384bbf5488c674561.r2.dev/${eventDetails.imageUrl}`
+                    : ImagemMock
+                }
+                alt="Event background"
+                className="blur-sm filter"
+              />
+            </div>
+            <div className="relative z-10 min-h-[300px] bg-black bg-opacity-50">
+              <div className="container mx-auto p-8 px-4">
+                <div className=" justify-center gap-6">
+                  <div className="relative flex w-full justify-center p-4 md:h-[500px]">
+                    <img
+                      src={
+                        eventDetails && eventDetails.imageUrl
+                          ? `https://pub-ed847887b3d7415384bbf5488c674561.r2.dev/${eventDetails.imageUrl}`
+                          : ImagemMock
+                      }
+                      alt="Foto do evento"
+                      className="background-cover max-w-800 h-full rounded-lg"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 transform">
+                <Button
+                  className="bg-opacity-50 hover:bg-opacity-75"
+                  onClick={copyUrlEvent}
+                >
+                  <Share className="mr-2 h-4 w-4" />
+                  COMPARTILHAR
+                </Button>
+              </div>
             </div>
           </div>
+
           <div className="container mx-auto px-4 py-8">
             <div className="grid gap-8 md:grid-cols-2">
               <EventDetails
