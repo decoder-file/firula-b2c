@@ -107,6 +107,8 @@ export default function EventPage() {
             <div className="grid gap-8 md:grid-cols-2">
               <EventDetails
                 title={eventDetails?.title || ''}
+                endDate={eventDetails?.endDate.toString() || ''}
+                endTime={eventDetails?.endTime || ''}
                 startDate={eventDetails?.startDate.toString() || ''}
                 startTime={eventDetails?.startTime || ''}
                 description={eventDetails?.description || ''}
