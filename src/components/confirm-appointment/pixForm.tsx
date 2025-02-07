@@ -24,12 +24,14 @@ type PixFormProps = {
   price: string | undefined
   paymentMethodSelected: string
   setLoadingPayment: (loading: boolean) => void
+  duration?: string
 }
 
 export function PixForm({
   price,
   paymentMethodSelected,
   setLoadingPayment,
+  duration = '1',
 }: PixFormProps) {
   const { setRouterName } = useRouterStore()
   const { scheduling, setScheduling } = useSchedulingStore()
@@ -42,7 +44,7 @@ export function PixForm({
   const [acceptTerm, setAcceptTerm] = useState(false)
   const [openDialog, setOpenDialog] = useState<boolean>(false)
 
-  const hourFish = moment(scheduling.hour, 'HH:mm').add(1, 'hours')
+  const hourFish = moment(scheduling.hour, 'HH:mm').add(duration, 'hours')
 
   const handleConfirmPayment = async () => {
     setLoadingPayment(true)

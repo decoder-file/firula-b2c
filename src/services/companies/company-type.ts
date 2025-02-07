@@ -11,5 +11,6 @@ export type CompanyType = {
   isActive: boolean
   isBlock: boolean
   userId: string
+  description: string
   companyAddress: AddressType[]
 }

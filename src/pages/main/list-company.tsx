@@ -132,9 +132,10 @@ export function ListCompany() {
                 companyInfo.map((company) => {
                   return (
                     <>
-                      <div
+                      <button
                         key={company.id}
                         className="mb-4 flex h-full w-full rounded-2xl bg-white shadow-md"
+                        onClick={() => navigate(`/quadras/${company.slug}`)}
                       >
                         <div className="flex  w-full max-w-48 items-center justify-center rounded-s-2xl ">
                           {company.imageUrl ? (
@@ -174,7 +175,7 @@ export function ListCompany() {
                             Selecionar quadra
                           </Button>
                         </div>
-                      </div>
+                      </button>
                     </>
                   )
                 })

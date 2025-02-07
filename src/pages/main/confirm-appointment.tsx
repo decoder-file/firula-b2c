@@ -51,7 +51,10 @@ export function ConfirmAppointment() {
   const [loadingBlockInfo, setLoadingBlockInfo] = useState(true)
   const [openingHours, setOpeningHours] = useState<OpeningHoursType>()
 
-  const hourFish = moment(scheduling.hour, 'HH:mm').add(1, 'hours')
+  const hourFish = moment(scheduling.hour, 'HH:mm').add(
+    scheduling.duration,
+    'hours',
+  )
 
   const fetchBlockById = async () => {
     setLoadingBlockInfo(true)
@@ -102,6 +105,7 @@ export function ConfirmAppointment() {
               ? openingHours?.valueForHourDayUse
               : openingHours?.priceForHour
           }
+          duration={scheduling.duration}
         />
       )
     }
