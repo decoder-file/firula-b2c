@@ -1,6 +1,6 @@
 import { Button } from '../../../../components/ui/button'
 import { Card, CardContent, CardHeader } from '../../../../components/ui/card'
-import { Calendar, Eye, MapPin, Printer } from 'lucide-react'
+import { Calendar, Eye, MapPin } from 'lucide-react'
 
 import ImagemMock from '../../../../assets/mock/imagem-background.png'
 import moment from 'moment'
