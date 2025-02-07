@@ -127,10 +127,10 @@ export function CompanyPage() {
                 </div>
               </div>
 
-              <div className=" justify-center ">
-                <div className="flex gap-4">
+              <div className="w-full justify-center ">
+                <div className="w-full gap-4">
                   {blocks.length === 0 ? (
-                    <div className="mb-5 flex flex-col items-center justify-center  text-center">
+                    <div className="mb-5 flex w-full flex-col items-center  justify-center text-center">
                       <img
                         src={BlockNotFound}
                         alt="Loading..."
