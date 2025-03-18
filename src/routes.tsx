@@ -20,6 +20,7 @@ import EventCheckoutPage from './pages/main/event/event-checkout'
 import EventPixConfirmPage from './pages/main/event/event-pix-confirm'
 import EventPaymentConfirmed from './pages/main/event/event-payment-confirmed'
 import { ListTicketsPage } from './pages/main/event/list-tickets'
+import { Term } from './pages/main/term'
 
 export const router = createBrowserRouter([
   {
@@ -68,6 +69,15 @@ export const router = createBrowserRouter([
       {
         path: '/quadras',
         element: <ListCompany />,
+      },
+    ],
+  },
+  {
+    element: <CompanyLayout />,
+    children: [
+      {
+        path: '/termo',
+        element: <Term />,
       },
     ],
   },
